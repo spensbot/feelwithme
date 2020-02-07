@@ -1,0 +1,25 @@
+{
+  "name": "feelwithme-apollo",
+  "version": "1.0.0",
+  "description": "A social media site which allows users to connect via mutual music interest",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Spenser Saling",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-datasource-rest": "^0.6.11",
+    "apollo-server-express": "^2.9.16",
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.8.11",
+    "passport": "^0.4.1",
+    "passport-spotify": "^1.1.0"
+  }
+}
