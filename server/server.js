@@ -8,7 +8,6 @@ const auth = require('./routes/auth')
 const sessionParser = require('./config/sessionParser')
 const vars = require('./config/vars')
 
-
 //---------------     MONGOOSE CONFIG     ----------------
 
 require('./config/mongooseConfig')

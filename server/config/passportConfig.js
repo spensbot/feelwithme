@@ -1,7 +1,7 @@
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const passport = require('passport');
 const User = require('../models/user');
-const {initializeUser} = require('../utils/userUtils');
+const {initializeUser} = require('../utils/initializeUser');
 const vars = require('../config/vars');
 
 passport.serializeUser(function (user, done) {

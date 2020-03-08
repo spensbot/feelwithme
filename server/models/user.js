@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
 
-const ObjectId = mongoose.Schema.Types.ObjectId
+//const ObjectId = mongoose.Schema.Types.ObjectId
 
-const initializationStatus = {
-    UNINITIALIZED: 'UNINITIALIZED',
-    FETCHING_ARTISTS: 'FETCHING_ARTISTS',
-    FETCHING_TRACKS: 'FETCHING_TRACKS',
-    CALCULATING_MATCHES: 'CALCULATING_MATCHES',
-    SUCCESS: 'SUCCESS',
-    FAILURE: 'FAILURE'
-}
+// const initializationStatus = {
+//     UNINITIALIZED: 'UNINITIALIZED',
+//     FETCHING_ARTISTS: 'FETCHING_ARTISTS',
+//     FETCHING_TRACKS: 'FETCHING_TRACKS',
+//     CALCULATING_MATCHES: 'CALCULATING_MATCHES',
+//     SUCCESS: 'SUCCESS',
+//     FAILURE: 'FAILURE'
+// }
 
 const userSchema = new mongoose.Schema({
     spotifyId: { type: String, unique: true, required: true }, //Originally "id"
@@ -24,10 +24,7 @@ const userSchema = new mongoose.Schema({
     tokenExpirationDate: Date,
 
     //Custom FWM fields
-    initializationStatus: { 
-        type: String,
-        default: initializationStatus.UNINITIALIZED
-    },
+    isInitialized: Boolean,
     lastInitialized: Date,
     displayName: String,
     bio: String,
@@ -58,5 +55,5 @@ userSchema.methods.mapSpotifyObject = function (userObject, accessToken, refresh
 const User = new mongoose.model("User", userSchema)
 
 module.exports = User
-module.exports.initializationStatus = initializationStatus
+//module.exports.initializationStatus = initializationStatus
 
