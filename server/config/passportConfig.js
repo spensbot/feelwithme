@@ -1,7 +1,7 @@
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const passport = require('passport');
 const User = require('../models/user');
-const {initializeUser} = require('../utils/initializeUser');
+const initializeUser = require('../utils/initializeUser');
 const vars = require('../config/vars');
 
 passport.serializeUser(function (user, done) {
@@ -30,7 +30,7 @@ passport.use(new SpotifyStrategy(
               newUser.mapSpotifyObject(profile._json, accessToken, refreshToken, expiresIn)
               newUser.save(function (err, savedUser) {
                   if (err) { return done(err) }
-                  initializeUser(user).then(function(user){
+                  initializeUser(savedUser).then(function(user){
                     return done(null, savedUser)
                   }).catch(function(err){
                     return done(err)

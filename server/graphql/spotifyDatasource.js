@@ -46,7 +46,7 @@ class SpotifyAPI extends RESTDataSource {
         response = await this.get(path, params)
       }
     }
-
+    
     return response
   }
 }

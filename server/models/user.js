@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     tokenExpirationDate: Date,
 
     //Custom FWM fields
-    isInitialized: Boolean,
+    isInitialized: { type: Boolean, default: false },
     lastInitialized: Date,
     displayName: String,
     bio: String,
