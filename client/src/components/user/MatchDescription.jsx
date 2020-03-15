@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function MatchDescription(match){
+export default () => {
   const classes = useStyles()
 
   return (

@@ -1,6 +1,5 @@
 require("dotenv").config()
 const bodyParser = require('body-parser')
-const cors = require('cors')
 const passport = require('passport')
 const express = require('express')
 //CUSTOM
@@ -30,7 +29,6 @@ app.set('trust proxy', 1)
 //Middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cors({ origin: vars.corsUrl, credentials: true }))
 app.use(sessionParser)
 app.use(passport.initialize())
 app.use(passport.session())
@@ -38,15 +36,23 @@ app.use(passport.session())
 //Routes
 app.use('/auth', auth)
 
-//---------------     START THE SERVER     ----------------
+//---------------     Apply the express app     -------------
+const corsOptions = {
+  origin: vars.corsUrl,
+  credentials: true
+}
 
-server.applyMiddleware({app})
+server.applyMiddleware({
+  app,
+  cors: corsOptions
+})
 
 //---------------     404 catchall     ------------------
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/404.html')
 })
  
+//---------------     START THE SERVER     ----------------
 app.listen({ port: vars.serverPort }, () =>
   console.log(`🚀 Server ready at http://localhost:${vars.serverPort}${server.graphqlPath}`)
 )

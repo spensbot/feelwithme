@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState }  from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,8 +10,6 @@ import Badge from '@material-ui/core/Badge';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {Link} from 'react-router-dom'
 import Config from '../../config'
-import { connect } from 'react-redux'
-import { setMainMenu, setUserMenu } from '../../redux/actions'
 import Avatar from '@material-ui/core/Avatar'
 import MainMenu from './MainMenu'
 import UserMenu from './UserMenu'
@@ -32,20 +30,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Header({mainMenuAnchorEl, userMenuAnchorEl, user, setMainMenu, setUserMenu}) {
+const initState = {
+  mainMenuAnchorEl: null,
+  userMenuAnchorEl: null
+}
+
+export default ({me}) => {
   const classes = useStyles();
 
+  const [state, setState] = useState(initState);
+
   function closeMainMenu() {
-    setMainMenu(null)
+    setState(initState)
   }
   function closeUserMenu() {
-    setUserMenu(null)
+    setState(initState)
   }
   function openMainMenu(e) {
-    setMainMenu(e.currentTarget)
+    setState({
+      mainMenuAnchorEl: e.currentTarget,
+      userMenuAnchorEl: null
+    })
   }
   function openUserMenu(e) {
-    setUserMenu(e.currentTarget)
+    setState({
+      mainMenuAnchorEl: null,
+      userMenuAnchorEl: e.currentTarget
+    })
   }
 
  
@@ -56,7 +67,13 @@ function Header({mainMenuAnchorEl, userMenuAnchorEl, user, setMainMenu, setUserM
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openMainMenu}>
             <MenuIcon />
           </IconButton>
-          <MainMenu anchorEl={mainMenuAnchorEl} handleClose={closeMainMenu} />
+          <MainMenu
+            anchorEl={state.mainMenuAnchorEl} 
+            open={Boolean(state.mainMenuAnchorEl)} 
+            handleClose={closeMainMenu} 
+            keepMounted
+            me={me}
+          />
           <Typography variant="h6" className={classes.title}>
             Feel with me
           </Typography>
@@ -66,32 +83,18 @@ function Header({mainMenuAnchorEl, userMenuAnchorEl, user, setMainMenu, setUserM
             </Badge>
           </IconButton>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={openUserMenu}>
-            {user ? <Avatar src={user.imageUrl}/> : <AccountCircleIcon />}
+            {me ? <Avatar src={me.imageUrl}/> : <AccountCircleIcon />}
           </IconButton>
-          <UserMenu anchorEl={userMenuAnchorEl} handleClose={closeUserMenu} />
+          <UserMenu 
+            anchorEl={state.userMenuAnchorEl} 
+            open={Boolean(state.userMenuAnchorEl)} 
+            handleClose={closeUserMenu}
+            keepMounted
+            me={me}
+          />
         </Toolbar>
       </AppBar>
       <Toolbar />
     </div>
   );
 }
-
-const mapStateToProps = state => {
-  return {
-    mainMenuAnchorEl: state.header.mainMenuAnchorEl,
-    userMenuAnchorEl: state.header.userMenuAnchorEl,
-    user: state.mainUser.user
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setMainMenu: anchorEl => dispatch(setMainMenu(anchorEl)),
-    setUserMenu: anchorEl => dispatch(setUserMenu(anchorEl))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header)

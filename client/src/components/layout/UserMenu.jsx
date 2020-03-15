@@ -2,10 +2,9 @@ import React from 'react'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
 import Config from '../../config'
 
-function UserMenu({anchorEl, handleClose, user}) {
+export default function UserMenu({anchorEl, handleClose, me}) {
 
   return (
     <div>
@@ -16,7 +15,7 @@ function UserMenu({anchorEl, handleClose, user}) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {user ?
+        {me ?
           <MenuItem component="a" href={Config.serverRoutes.logoutUrl} onClick={handleClose}>Logout</MenuItem>
           : <MenuItem component={Link} to={Config.routes.login} onClick={handleClose}>Login</MenuItem>
         }
@@ -24,14 +23,3 @@ function UserMenu({anchorEl, handleClose, user}) {
     </div>
   )
 }
-
-const mapStateToProps = state => {
-  return {
-    user: state.mainUser.user
-  }
-}
-
-export default connect(
-  mapStateToProps
-)(UserMenu)
-

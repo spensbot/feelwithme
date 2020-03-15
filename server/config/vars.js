@@ -2,11 +2,11 @@ const vars = {
   development: process.env.NODE_ENV ? false : true,
   localSpotifyCallback: '/auth/spotify/callback',
   spotifyApi:{
-    url: 'https://api.spotify.com/v1',
-    userTopArtists: '/me/top/artists',
-    userTopTracks: '/me/top/tracks',
-    artists: '/artists',
-    tracks: '/tracks',
+    url: 'https://api.spotify.com/v1/',
+    userTopArtists: 'me/top/artists',
+    userTopTracks: 'me/top/tracks',
+    artists: 'artists',
+    tracks: 'tracks',
     refreshTokenUrl: 'https://accounts.spotify.com/api/token'
   },
   appPort: 3000, //Default when running a react in dev mode. I didn't set this

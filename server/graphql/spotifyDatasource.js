@@ -1,5 +1,8 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
 const apiRoutes = require('../config/vars').spotifyApi
+const axios = require('axios')
+const qs = require('querystring')
+
 
 class SpotifyAPI extends RESTDataSource {
   constructor() {
@@ -7,85 +10,138 @@ class SpotifyAPI extends RESTDataSource {
     this.baseURL = apiRoutes.url;
   }
 
-  initialize(config) {
-    this.context = config.context;
-  }
+  // initialize(config) {
+  //   super();
+  //   this.context = config.context;
+  // }
 
   willSendRequest(request) {
-    request.headers.set('Authorization', 'Bearer ' + this.context.token);
+    request.headers.set('Authorization', 'Bearer ' + this.context.user.spotifyAccessToken)
   }
 
-  async getTracks({ spotifyTrackIds }){
+  async getTracks(spotifyIds){
     //comma separated ids per spotify api docs
-    ids = spotifyTrackIds.join(',')
+    //ids = spotifyTrackIds.join(',')
 
-    const response = await wrappedRequest(user, apiRoutes.tracks, {ids: ids})
+    const response = await this.wrappedRequest(this.context.user, 'tracks', {ids: spotifyIds})
 
-    return response.tracks.map( track => reduceTrack(track) )
+    const tracks = response.tracks
+
+    return Array.isArray(tracks)
+      ? tracks.map( track => reduceTrack(track))
+      : [];
   }
-  
-  async getArtists({ spotifyArtistIds }){
+
+  async getArtists(spotifyIds){
     //comma separated ids per spotify api docs
-    ids = spotifyArtistIds.join(',')
+    //ids = spotifyArtistIds.join(',')
 
-    const response = await wrappedRequest(user, apiRoutes.artists, {ids: ids})
+    const response = await this.wrappedRequest(this.context.user, 'artists', {ids: spotifyIds})
 
-    return response.artists.map( artist => reduceArtist(artist) )
+    const artists = response.artists
+
+    return Array.isArray(artists)
+      ? artists.map( artist => reduceArtist(artist))
+      : [];
   }
 
   //Use to "wrap" requests to spotify.
   //Checks for a valid access token.
   async wrappedRequest(user, path, params) {
-    this.context.token = await getAccessToken(user)
+    this.context.accessToken = await this.getAccessToken(user)
 
     let response = await this.get(path, params)
 
     if (response.error){
-      if (isTokenExpired){
-        this.context.token = await refreshAccessToken(user)
+      if (isTokenExpired(response.error)){
+        
+        await this.refreshAccessToken(user)
         response = await this.get(path, params)
       }
     }
     
     return response
   }
+
+  //Returns a user's access token for getting data from Spotify.
+  //Gets a new token if necessary.
+  async getAccessToken(user) {
+    const timeBuffer = 60 * 1000 //1 minute
+
+    if (Date.now() > (user.tokenExpirationDate - timeBuffer)) {
+      await this.refreshAccessToken(user)
+    }
+  }
+
+  async refreshAccessToken(user) {
+    // const response = await this.post(apiRoutes.refreshTokenUrl, {
+    //   grant_type: 'refresh_token',
+    //   refresh_token: user.spotifyRefreshToken,
+    //   client_id: process.env.SPOTIFY_CLIENT_ID,
+    //   client_secret: process.env.SPOTIFY_CLIENT_SECRET
+    // })
+
+    const requestData = qs.stringify({
+      grant_type: 'refresh_token',
+      refresh_token: user.spotifyRefreshToken,
+      client_id: process.env.SPOTIFY_CLIENT_ID,
+      client_secret: process.env.SPOTIFY_CLIENT_SECRET
+    })
+
+    const requestConfig = {
+        url: apiRoutes.refreshTokenUrl,
+        method: 'post',
+        //headers: { Authorization: 'Bearer ' + user.spotifyAccessToken},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        responseType: 'json',
+        // params: {
+        //   grant_type: 'refresh_token',
+        //   refresh_token: user.spotifyRefreshToken,
+        //   client_id: process.env.SPOTIFY_CLIENT_ID,
+        //   client_secret: process.env.SPOTIFY_CLIENT_SECRET
+        // },
+        data: requestData
+    }
+
+    const response = await axios.request(requestConfig)
+    const data = response.data
+
+    user.spotifyAccessToken = data.access_token
+    user.tokenExpirationDate = Date.now() + (data.expires_in * 1000)
+
+    await user.save()
+  }
 }
 
 function reduceTrack(track){
-  return track
+  const reducedTrack = {
+    spotifyId: track.id,
+    name: track.name,
+    artistName: track.artists[0].name,
+    spotifyUrl: track.external_urls.spotify,
+    imageUrl: null
+  }
+
+  if (track.album.images[0]) {
+    reducedTrack.imageUrl = track.album.images[0].url
+  }
+
+  return reducedTrack
 }
 
 function reduceArtist(artist){
-  return artist
-}
-
-//Returns a user's access token for getting data from Spotify.
-//Gets a new token if necessary.
-async function getAccessToken(user) {
-  const timeBuffer = 60 * 1000 //1 minute
-
-  let accessToken = user.accessToken
-
-  if (Date.now() > (user.tokenExpirationDate - timeBuffer)) {
-    accessToken = await refreshAccessToken(user)
+  const reducedArtist = {
+    spotifyId: artist.id,
+    name: artist.name,
+    spotifyUrl: artist.external_urls.spotify,
+    imageUrl: null
   }
 
-  return accessToken
-}
+  if (artist.images[0]) {
+    reducedArtist.imageUrl = artist.images[0].url 
+  }
 
-async function refreshAccessToken(user) {
-  const response = await this.post(apiRoutes.refreshTokenUrl, {
-    grant_type: 'refresh_token',
-    refresh_token: refreshToken,
-    client_id: process.env.SPOTIFY_CLIENT_ID,
-    client_secret: process.env.SPOTIFY_CLIENT_SECRET
-  })
-
-  user.spotifyAccessToken = response.accessToken
-
-  await user.save()
-
-  return response.accessToken
+  return reducedArtist
 }
 
 function isTokenExpired(error){

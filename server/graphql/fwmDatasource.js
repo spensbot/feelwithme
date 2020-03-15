@@ -13,30 +13,93 @@ class FwmAPI extends DataSource {
     this.context = config.context;
   }
 
+//---------------------     QUERIES     ----------------------
+
   async getActiveUser(){
     let activeUser = null
-    if (this.context && this.context.userId){
-      activeUser = await User.findById(this.context.userId)
+
+    if (this.context.user && this.context.user.id){
+      activeUser = User.findById(this.context.user.id)
     }
     return activeUser
   }
 
-  async getUser({ id }){
-    user = await User.findById(id)
+  async getUser( id ){
+    const user = await User.findById(id)
     return user
   }
 
-  async updateUser({  }){
-    return null
+  async getActiveUserMatches(limit){
+
+    const matches1 = await Match.find({user1: this.context.user.id})
+    .sort({'weightedMatch': -1})
+    .limit(limit)
+    .populate('user2')
+
+    const matches1Mod = matches1.map(function(match){
+      match.user = match.user2
+      return match
+    })
+
+    const matches2 = await Match.find({user2: this.context.user.id})
+    .sort({'weightedMatch': -1})
+    .limit(limit)
+    .populate('user1')
+
+    const matches2Mod = matches2.map(function(match){
+      match.user = match.user1
+      return match
+    })
+
+    const sortedMatches = matches1Mod.concat(matches2Mod).sort((a, b) => a.weightedMatch - b.weightedMatch)
+
+    const matches = sortedMatches.slice(0, limit)
+
+    return matches
   }
 
-  async getMatches({  }){
-    return null
+  async getActiveUserMessages(){
+    const messages = await Message.find({
+      $or: [ 
+        {from: this.context.user.id},
+        {to: this.context.user.id}
+      ]
+    }).populate('from').populate('to')
+
+    return messages
   }
 
-  async getMessages({ userId }){
-    return null
+//-----------------------     MUTATIONS     --------------------
+
+  async createMessage( to, content ){
+    const message = new Message({
+      from: this.context.user.id,
+      to: to,
+      content: content
+    })
+
+    return await message.save()
+  }
+
+  async setMessageViewed( messageId ) {
+    const message = await Message.findById(messageId)
+    message.viewed = Date.now()
+    const newMessage = await message.save()
+  }
+
+  async updateActiveUser( displayName, bio ) {
+    if(displayName){
+      this.context.user.displayName = displayName
+    }
+    if(bio) {
+      this.context.user.bio = bio
+    }
+
+    return await this.context.user.save()
   }
 }
+
+//-----------------------     HELPERS     -------------------------
+
     
 module.exports = FwmAPI;

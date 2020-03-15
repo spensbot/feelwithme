@@ -7,7 +7,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core';
 import CommonIndicator from './CommonIndicator'
-import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
     avatar: {
@@ -50,12 +49,12 @@ function BasicListItem({item, isMatch}) {
     )
 }
 
-function BasicList({isMainUser, isSongs, items, mainUser}) {
+export default ({isMe, isTracks, items, me}) => {
 
-    const title = isSongs ? "Top Songs" : "Top Artists"
+    const title = isTracks? "Top Songs" : "Top Artists"
     let compareList = []
-    if (!isMainUser){
-        compareList = isSongs ? mainUser.user.topSongs : mainUser.user.topArtists 
+    if (!isMe){
+        compareList = isTracks ? me.topTracks : me.topArtists 
     }
 
     return (
@@ -80,11 +79,3 @@ function isInList(id, list){
         return true
     }
 }
-
-const mapStateToProps = state => ({
-    mainUser: state.mainUser
-})
-
-export default connect (
-    mapStateToProps
-)(BasicList)

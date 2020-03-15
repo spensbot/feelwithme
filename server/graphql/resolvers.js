@@ -1,20 +1,25 @@
 module.exports = {
   Query: {
-    test: (_, __, {}) => 'Successful Test!',
     me: (_, __, {dataSources}) => dataSources.fwmAPI.getActiveUser(),
-    otherUser: (_, {id}, {dataSources}) => dataSources.fwmAPI.getUser({id: id}),
-    
-
-
-
-    // hello: (_, __, {dataSources}) => 'Hello world!',
-    // bob: (_, __, {dataSources}) => 
-    //   dataSources.testAPI.getBob(),
-    // food: (_, {type}, {dataSources}) => 
-    //   dataSources.testAPI.getFood({type: type}),
-    // pie: (_, __, {dataSources}) => 
-    //   dataSources.testAPI.getPie(),
-    // pizza: (_, {type}, {dataSources}) =>
-    //   dataSources.testAPI.getPizza({type: type}),
+    user: (_, {id}, {dataSources}) => dataSources.fwmAPI.getUser(id),
+    messages: (_, __, {dataSources}) => dataSources.fwmAPI.getActiveUserMessages(),
+    matches: (_, {limit} = {limit: 10}, {dataSources}) => dataSources.fwmAPI.getActiveUserMatches(limit),
+    // tracks: (_, {spotifyIds}, {dataSources}) => dataSources.spotifyAPI.getTracks(spotifyIds),
+    // artists: (_, {spotifyIds}, {dataSources}) => dataSources.spotifyAPI.getArtists(spotifyIds),
   },
+
+  Mutation: {
+    createMessage: (_, {to, content}, {dataSources}) => dataSources.fwmAPI.createMessage(to, content),
+    setMessageViewed: (_, {messageId}, {dataSources}) => dataSources.fwmAPI.viewedMessage(messageId),
+    updateProfile: (_, {displayName, bio}, {dataSources}) => dataSources.fwmAPI.updateActiveUser(displayName, bio)
+  },
+
+  User: {
+    topTracks: async (user, __, {dataSources}) => {
+      return dataSources.spotifyAPI.getTracks(user.topTracks.join(','))
+    },
+    topArtists: async (user, __, {dataSources}) => {
+      return dataSources.spotifyAPI.getArtists(user.topArtists.join(','))
+    }
+  }
 };

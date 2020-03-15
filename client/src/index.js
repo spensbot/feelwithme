@@ -1,19 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux'
-import {Provider} from 'react-redux'
-import appReducer from './redux/reducers'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import { BrowserRouter } from 'react-router-dom'
-import ReduxThunk from 'redux-thunk'
-//Custom
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ApolloClient from 'apollo-boost'
+import { ApolloProvider } from '@apollo/react-hooks'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import { BrowserRouter } from "react-router-dom"
 import App from './App'
+import config from './config'
+
+const cache = new InMemoryCache()
+
+const client = new ApolloClient({
+  uri: config.serverRoutes.graphQLUrl,
+  credentials: "include",
+  cache: cache
+});
 
 ReactDOM.render(
-    <Provider store={store}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-    </Provider>,
-    document.getElementById('root')
+  <ApolloProvider client={client}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ApolloProvider>
+  , document.getElementById('root')
 );

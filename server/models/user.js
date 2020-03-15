@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema({
     //Custom FWM fields
     isInitialized: { type: Boolean, default: false },
     lastInitialized: Date,
+    darkMode: { type: Boolean, default: true},
     displayName: String,
     bio: String,
     imageUrl: String,
@@ -41,7 +42,7 @@ userSchema.methods.mapSpotifyObject = function (userObject, accessToken, refresh
         this.imageUrl = this.spotifyImageUrl
     }
     this.spotifyDisplayName = userObject.display_name
-    this.displayName = userObject.displayName
+    this.displayName = this.spotifyDisplayName
 
     this.spotifyCountry = userObject.country
     this.spotifyHref = userObject.href

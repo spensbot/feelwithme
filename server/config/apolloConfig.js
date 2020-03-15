@@ -4,6 +4,7 @@ const typeDefs = require('../graphql/schema')
 const resolvers = require('../graphql/resolvers')
 const FwmAPI = require('../graphql/fwmDatasource')
 const SpotifyAPI = require('../graphql/spotifyDatasource')
+const User = require('../models/user')
 
 module.exports = function(){
   const dataSources = () => ({
@@ -11,9 +12,14 @@ module.exports = function(){
     spotifyAPI: new SpotifyAPI(),
   })
 
-  const context = ({req}) => {
-    userId = req.session.passport && req.session.passport.user ? req.session.passport.user : null
-    return { userId }
+  const context = async ({req}) => {
+    let user = null
+
+    if (req.session.passport && req.session.passport.user){
+      user = await User.findById(req.session.passport.user)
+    }
+
+    return { user }
   }
 
   return new ApolloServer({

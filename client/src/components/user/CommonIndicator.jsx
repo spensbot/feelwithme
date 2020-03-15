@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function CommonIndicator(){
+export default () => {
   const classes = useStyles()
 
   return (
