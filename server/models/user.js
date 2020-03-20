@@ -52,6 +52,10 @@ userSchema.methods.mapSpotifyObject = function (userObject, accessToken, refresh
     this.tokenExpirationDate = Date.now() + (expiresIn * 1000)
 }
 
+userSchema.pre('save', function() {
+    console.log(`Attempting save user: ${this.displayName}`)
+})
+
 
 const User = new mongoose.model("User", userSchema)
 

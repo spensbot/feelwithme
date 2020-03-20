@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import { Button, Box, Divider, TextField, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
+import { Link } from 'react-router-dom'
+import gqlTags from '../gqlTags'
 import { useMutation } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 
 const useStyles = makeStyles(theme => ({
   spacedButton: {
@@ -17,15 +18,21 @@ const useStyles = makeStyles(theme => ({
 
 export default ({ isMe, user }) => {
 
-  const classes = useStyles();
-
   const initState = {
     displayNameEdit: user.displayName,
     bioEdit: user.bio,
     isEditing: false
   };
 
-  const [state, setState] = useState(initState);
+  const classes = useStyles()
+
+  const [state, setState] = useState(initState)
+
+  const [updateProfile, {loading, error, data}] = useMutation(gqlTags.updateProfile)
+
+  const statusDisplay = null
+  // if (loading) statusDisplay = <h1>Saving Your Data</h1>
+  // if (error) statusDisplay = <h1>There was an Error. Please refresh and try again.</h1>
 
   const setDisplayName = e => {
     setState({
@@ -49,7 +56,7 @@ export default ({ isMe, user }) => {
   };
 
   const updateUserInfo = e => {
-    //Todo
+    updateProfile({ variables: { bio: state.bioEdit, displayName: state.displayNameEdit } })
   };
 
   const editMode = isMe && state.isEditing;
@@ -68,7 +75,7 @@ export default ({ isMe, user }) => {
   const bioBlock = editMode ? (
     <TextField
       label="Bio"
-      value={state.bioEdit}
+      value={state.bioEdit || ""}
       onChange={setBio}
       multiline
       rows="4"
@@ -76,11 +83,11 @@ export default ({ isMe, user }) => {
   ) : (
     <>
       <Divider />
-      <p>{user.bio || "This User Hasn't Created A Bio Yet"}</p>
+      <p style={{wordBreak: 'break-all'}}>{user.bio || "This User Hasn't Created A Bio Yet"}</p>
     </>
   );
 
-  let buttonsBlock = <Button variant="contained">message</Button>;
+  let buttonsBlock = <Button variant="contained" component={Link} to={`/messages/${user.id}`}>Message</Button>;
   if (editMode) {
     buttonsBlock = (
       <>
@@ -88,9 +95,8 @@ export default ({ isMe, user }) => {
           variant="contained"
           onClick={() => setIsEditing(false)}
           className={classes.spacedButton}
-        >
-          cancel
-        </Button>
+        > cancel </Button>
+
         <Button variant="contained" onClick={updateUserInfo}>
           save
         </Button>
@@ -99,23 +105,14 @@ export default ({ isMe, user }) => {
   } else if (isMe) {
     buttonsBlock = (
       <Button variant="contained" onClick={() => setIsEditing(true)}>
-        edit info
+        edit
       </Button>
     );
   }
 
-  const UPDATE_PROFILE = gql`
-  {
-    updateProfile(displayName:"Hello" bio:"Sup"){
-      displayName
-      bio
-    }
-  }`
-
-  useMutation()
-
   return (
     <Box display="flex" flexDirection="column" flex="1 1 0">
+      {statusDisplay}
       <Box
         className={classes.nameField}
         display="flex"

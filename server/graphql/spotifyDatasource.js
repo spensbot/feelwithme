@@ -10,20 +10,15 @@ class SpotifyAPI extends RESTDataSource {
     this.baseURL = apiRoutes.url;
   }
 
-  // initialize(config) {
-  //   super();
-  //   this.context = config.context;
-  // }
-
   willSendRequest(request) {
     request.headers.set('Authorization', 'Bearer ' + this.context.user.spotifyAccessToken)
   }
 
   async getTracks(spotifyIds){
     //comma separated ids per spotify api docs
-    //ids = spotifyTrackIds.join(',')
+    const ids = spotifyIds.join(',')
 
-    const response = await this.wrappedRequest(this.context.user, 'tracks', {ids: spotifyIds})
+    const response = await this.wrappedRequest(this.context.user, 'tracks', {ids: ids})
 
     const tracks = response.tracks
 
@@ -34,9 +29,9 @@ class SpotifyAPI extends RESTDataSource {
 
   async getArtists(spotifyIds){
     //comma separated ids per spotify api docs
-    //ids = spotifyArtistIds.join(',')
+    const ids = spotifyIds.join(',')
 
-    const response = await this.wrappedRequest(this.context.user, 'artists', {ids: spotifyIds})
+    const response = await this.wrappedRequest(this.context.user, 'artists', {ids: ids})
 
     const artists = response.artists
 
@@ -51,14 +46,6 @@ class SpotifyAPI extends RESTDataSource {
     this.context.accessToken = await this.getAccessToken(user)
 
     let response = await this.get(path, params)
-
-    if (response.error){
-      if (isTokenExpired(response.error)){
-        
-        await this.refreshAccessToken(user)
-        response = await this.get(path, params)
-      }
-    }
     
     return response
   }
@@ -74,12 +61,6 @@ class SpotifyAPI extends RESTDataSource {
   }
 
   async refreshAccessToken(user) {
-    // const response = await this.post(apiRoutes.refreshTokenUrl, {
-    //   grant_type: 'refresh_token',
-    //   refresh_token: user.spotifyRefreshToken,
-    //   client_id: process.env.SPOTIFY_CLIENT_ID,
-    //   client_secret: process.env.SPOTIFY_CLIENT_SECRET
-    // })
 
     const requestData = qs.stringify({
       grant_type: 'refresh_token',
@@ -91,15 +72,8 @@ class SpotifyAPI extends RESTDataSource {
     const requestConfig = {
         url: apiRoutes.refreshTokenUrl,
         method: 'post',
-        //headers: { Authorization: 'Bearer ' + user.spotifyAccessToken},
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         responseType: 'json',
-        // params: {
-        //   grant_type: 'refresh_token',
-        //   refresh_token: user.spotifyRefreshToken,
-        //   client_id: process.env.SPOTIFY_CLIENT_ID,
-        //   client_secret: process.env.SPOTIFY_CLIENT_SECRET
-        // },
         data: requestData
     }
 
@@ -115,7 +89,7 @@ class SpotifyAPI extends RESTDataSource {
 
 function reduceTrack(track){
   const reducedTrack = {
-    spotifyId: track.id,
+    id: track.id,
     name: track.name,
     artistName: track.artists[0].name,
     spotifyUrl: track.external_urls.spotify,
@@ -131,7 +105,7 @@ function reduceTrack(track){
 
 function reduceArtist(artist){
   const reducedArtist = {
-    spotifyId: artist.id,
+    id: artist.id,
     name: artist.name,
     spotifyUrl: artist.external_urls.spotify,
     imageUrl: null

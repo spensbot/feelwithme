@@ -3,13 +3,13 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import themes from './themes'
-import UserGate from './pages/LoginGate'
+import LoginGate from './components/LoginGate'
 
 function App() {
   return (
     <ThemeProvider theme={themes.dark}>
       <CssBaseline />
-      <UserGate />
+      <LoginGate />
     </ThemeProvider>
   );
 }

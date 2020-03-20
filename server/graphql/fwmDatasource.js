@@ -58,15 +58,65 @@ class FwmAPI extends DataSource {
     return matches
   }
 
-  async getActiveUserMessages(){
+  async getAllMessages(){
     const messages = await Message.find({
       $or: [ 
         {from: this.context.user.id},
         {to: this.context.user.id}
       ]
-    }).populate('from').populate('to')
+    })//.populate('from').populate('to')
 
     return messages
+  }
+
+  async getScopedMessages(id){
+    const userId = this.context.user.id
+
+    const messages = await Message.find({
+      $or: [
+        {
+          $and: [
+            {from: userId},
+            {to: id}
+          ]
+        },
+        {
+          $and: [
+            {from: id},
+            {to: userId}
+          ]
+        },
+      ]
+    })
+
+    return messages
+  }
+
+  async getMessagedUsers() {
+    const sentMessages = await Message.find({ from: this.context.user })
+    const receivedMessages = await Message.find({ to: this.context.user })
+
+    const messagedUsers = []
+
+    sentMessages.forEach( function(message){
+
+      const to = message.to.toString()
+
+      if(!messagedUsers.includes(to)){
+        messagedUsers.push(to)
+      }
+    })
+
+    receivedMessages.forEach( function(message){
+
+      const from = message.from.toString()
+
+      if(!messagedUsers.includes(from)){
+        messagedUsers.push(from)
+      }
+    })
+
+    return messagedUsers
   }
 
 //-----------------------     MUTATIONS     --------------------

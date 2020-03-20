@@ -7,7 +7,6 @@ const useStyles = makeStyles( theme => ({
   outgoing: {
     marginRight: 'auto',
     width: '70%',
-    
   },
   outgoingCard: {
     backgroundColor: 'rgba(100,100,100,.8)',
@@ -28,11 +27,13 @@ const useStyles = makeStyles( theme => ({
   infoText: {
     textAlign: 'right',
     marginTop: '.3rem',
-    marginBottom: '.8rem'
+    marginBottom: '.8rem',
+    fontSize: '.8rem',
+    opacity: .5
   }
 }))
 
-export default function MessageItem({ isOutgoing }) {
+export default ({ isOutgoing, content, timeStamp }) => {
 
   const classes = useStyles()
 
@@ -43,11 +44,11 @@ export default function MessageItem({ isOutgoing }) {
     <div className={root}>
       <Card className={card}>
         <Typography>
-          Message Body
+          {content}
         </Typography>
       </Card>
       <Typography className={classes.infoText}>
-        Seen time
+        {timeStamp}
       </Typography>
     </div>
   )

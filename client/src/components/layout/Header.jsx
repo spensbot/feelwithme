@@ -13,6 +13,8 @@ import Config from '../../config'
 import Avatar from '@material-ui/core/Avatar'
 import MainMenu from './MainMenu'
 import UserMenu from './UserMenu'
+import tags from '../gqlTags'
+import {useQuery} from '@apollo/react-hooks'
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -35,8 +37,10 @@ const initState = {
   userMenuAnchorEl: null
 }
 
-export default ({me}) => {
+export default ({fixed}) => {
   const classes = useStyles();
+
+  const { loading, error, data } = useQuery(tags.readMe)
 
   const [state, setState] = useState(initState);
 
@@ -58,11 +62,10 @@ export default ({me}) => {
       userMenuAnchorEl: e.currentTarget
     })
   }
-
  
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <AppBar position={fixed ? "fixed" : "relative"}>
         <Toolbar className={classes.toolbar}>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openMainMenu}>
             <MenuIcon />
@@ -72,7 +75,7 @@ export default ({me}) => {
             open={Boolean(state.mainMenuAnchorEl)} 
             handleClose={closeMainMenu} 
             keepMounted
-            me={me}
+            me={data.me}
           />
           <Typography variant="h6" className={classes.title}>
             Feel with me
@@ -83,18 +86,18 @@ export default ({me}) => {
             </Badge>
           </IconButton>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={openUserMenu}>
-            {me ? <Avatar src={me.imageUrl}/> : <AccountCircleIcon />}
+            {data.me ? <Avatar src={data.me.imageUrl}/> : <AccountCircleIcon />}
           </IconButton>
           <UserMenu 
             anchorEl={state.userMenuAnchorEl} 
             open={Boolean(state.userMenuAnchorEl)} 
             handleClose={closeUserMenu}
             keepMounted
-            me={me}
+            me={data.me}
           />
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      {/* <Toolbar /> */}
     </div>
   );
 }

@@ -7,28 +7,29 @@ module.exports = gql`
   type Query {
     me: User
     user(id: ID!): User
-    messages: [Message!]!
+    allMessages: [Message!]!
+    scopedMessages(id: ID!): [Message!]!
+    messagedUsers: [ID!]!
     matches(limit: Int): [Match!]!
   }
   
   type Mutation {
     createMessage(to: ID!, content: String!): Message!
-    setMessageViewed(message: ID!): Message
+    setMessageViewed(message: ID!): Message!
     updateProfile(displayName: String, bio: String): User!
   }
 
   type Subscription {
-    messageInProgress: ID!
+    messageInProgress: User!
     newMessage: Message!
     viewedMessage: Message!
-    initializationStatusUpdate: InitializationStatus!
   }
 
 #-----------     OBJECT DEFS     ------------
 
   type User {
-    spotifyId: ID!
     id: ID!
+    spotifyId: ID!
     spotifyProfileUrl: URL!
     isInitialized: Boolean!
     displayName: String!
@@ -39,14 +40,16 @@ module.exports = gql`
   }
 
   type Message {
-    from: User!
-    to: User!
+    id: ID!
+    from: ID!
+    to: ID!
     content: String!
     sent: Date!
     viewed: Date
   }
 
   type Match {
+    id: ID!
     user: User!
     trackCount: Int!
     artistCount: Int!
@@ -54,30 +57,21 @@ module.exports = gql`
   }
 
   type Artist {
-    spotifyId: ID!
+    id: ID!
     name: String!
-    imageUrl: URL
     spotifyUrl: URL!
+    imageUrl: URL
   } 
 
   type Track {
-    spotifyId: ID!
+    id: ID!
     name: String!
-    artistName: String!
     spotifyUrl: URL!
     imageUrl: URL
+    artistName: String!
   }
 
 #------------     TYPE DEFS     -----------
-
-  enum InitializationStatus {
-    UNINITIALIZED
-    FETCHING_ARTISTS
-    FETCHING_TRACKS
-    CALCULATING_MATCHES
-    SUCCESS
-    FAILURE
-  }
 
   scalar Date
   scalar URL

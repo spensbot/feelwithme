@@ -1,31 +1,15 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 import { Switch, Route } from 'react-router-dom'
-
-import Error from './Error'
-import Login from './Login'
-import Messages from './Messages'
-import About from './About'
-import User from './User'
-
-const GET_ME = gql`
-  {
-    me {
-      spotifyId
-      spotifyProfileUrl
-
-      id
-      displayName
-      isInitialized
-      bio
-      imageUrl
-    }
-  }
-`;
+import Error from '../pages/Error'
+import Login from '../pages/Login'
+import Messages from '../pages/Messages'
+import About from '../pages/About'
+import User from '../pages/User'
+import tags from './gqlTags'
 
 export default () => {
-  const { loading, error, data } = useQuery(GET_ME)
+  const { loading, error, data } = useQuery(tags.readMe)
   if (loading) return <Login isLoading/>
   if (error) {
     console.log(error)
@@ -44,16 +28,19 @@ export default () => {
   return (
     <Switch>
       <Route path="/users/:id">
-        <User me={me}/>
+        <User />
       </Route>
       <Route path="/about">
-        <About me={me}/>
+        <About />
+      </Route>
+      <Route path="/messages/:id">
+        <Messages />
       </Route>
       <Route path="/messages">
-        <Messages me={me}/>
+        <Messages />
       </Route>
       <Route path="/">
-        <Login me={me} />
+        <Login />
       </Route>
     </Switch>
   )

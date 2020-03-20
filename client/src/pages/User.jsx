@@ -4,21 +4,20 @@ import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 //Apollo
 import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 import { useParams } from 'react-router-dom'
 //Custom
 import MatchList from '../components/user/MatchList'
 import UserInfo from '../components/user/UserInfo'
-import BasicList from '../components/user/BasicList'
+import BasicList from '../components/user/SpotifyList'
 import MatchDescription from '../components/user/MatchDescription'
-import Loading from '../components/user/Loading'
 import Layout from '../components/Layout'
 import Spacer from '../components/basic/Spacer'
+import tags from '../components/gqlTags'
 
 
 const useStyles = makeStyles(theme => ({
   list: {
-    flexGrow: '1'
+    flex: '1 1 auto'
   }
 }))
 
@@ -30,57 +29,7 @@ export default () => {
 
   const classes = useStyles()
 
-  const GET_USER = gql`
-  {
-    user(id: "${id}"){
-      spotifyId
-      spotifyProfileUrl
-
-      id
-      displayName
-      isInitialized
-      bio
-      imageUrl
-      
-      topTracks{
-        name
-        artistName
-        spotifyUrl
-        imageUrl
-      }
-      topArtists{
-        name
-        spotifyUrl
-        imageUrl
-      }
-    }
-
-    me {
-      spotifyId
-      spotifyProfileUrl
-
-      id
-      displayName
-      isInitialized
-      bio
-      imageUrl
-      
-      topTracks{
-        name
-        artistName
-        spotifyUrl
-        imageUrl
-      }
-      topArtists{
-        name
-        spotifyUrl
-        imageUrl
-      }
-    }
-
-  }`
-
-  const { loading, error, data } = useQuery(GET_USER)
+  const { loading, error, data } = useQuery(tags.readUser, {variables: {id: id}})
 
   if (loading) {
     return <h1>"Hey Spotify, can we have some info please?"</h1>
@@ -94,10 +43,8 @@ export default () => {
   const isMe = data.me.id === id
 
   return (
-    <Layout me={data.me}>
+    <Layout>
       <UserInfo isMe={isMe} user={data.user} me={data.me} />
-
-      <Spacer />
 
       {isMe ? <MatchList user={data.user} /> : <MatchDescription user={data.user}/>}
 
