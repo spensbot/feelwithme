@@ -2,9 +2,9 @@ import React from "react";
 import List from "@material-ui/core/List";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useQuery } from '@apollo/react-hooks'
-import {GET_MATCHES} from '../gqlTags'
+import {GET_MATCHES} from '../../gqlTags'
 import ListItem from './MatchListItem'
-import tags from '../gqlTags'
+import tags from '../../gqlTags'
 
 export default () => {
 

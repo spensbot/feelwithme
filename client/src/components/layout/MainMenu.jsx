@@ -3,14 +3,28 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import {Link} from 'react-router-dom'
 import Config from '../../config'
+import { useApolloClient, useQuery } from '@apollo/react-hooks'
+import { setTheme } from '../../localCache'
+import gql from 'graphql-tag' 
 
-export default function MainMenu({handleClose, anchorEl, darkTheme, me, setTheme}) {
+const READ_THEME = gql`{
+  theme
+}`
 
-  const themeText = darkTheme ? 'Light Mode' : 'Dark Mode'
+export default function MainMenu({handleClose, anchorEl, me}) {
+
+  const client = useApolloClient();
+
+  const {data} = useQuery(READ_THEME);
+
+  const themeText = (data.theme === 'LIGHT') ? 'Dark Mode' : 'Light Mode'
 
   function handleThemeClick(e){
     handleClose(e.currentTarget)
-    //setTheme(!darkTheme)
+
+    const newTheme = (data.theme === 'LIGHT') ? 'DARK' : 'LIGHT'
+
+    setTheme(client, newTheme)
   }
 
   return (

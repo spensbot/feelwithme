@@ -13,7 +13,7 @@ import Config from '../../config'
 import Avatar from '@material-ui/core/Avatar'
 import MainMenu from './MainMenu'
 import UserMenu from './UserMenu'
-import tags from '../gqlTags'
+import tags from '../../gqlTags'
 import {useQuery} from '@apollo/react-hooks'
 
 const useStyles = makeStyles(theme => ({
@@ -62,10 +62,19 @@ export default ({fixed}) => {
       userMenuAnchorEl: e.currentTarget
     })
   }
+
+  const style = {
+    position: fixed ? "fixed" : "relative",
+    top: '0',
+    left: '0',
+    right: '0',
+    zIndex: '1'
+  }
  
   return (
-    <div className={classes.root}>
-      <AppBar position={fixed ? "fixed" : "relative"}>
+    <div style={style}>
+      {/* <AppBar position={fixed ? "fixed" : "relative"}> */}
+      <AppBar style={{position: 'relative'}}>
         <Toolbar className={classes.toolbar}>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openMainMenu}>
             <MenuIcon />
@@ -97,7 +106,6 @@ export default ({fixed}) => {
           />
         </Toolbar>
       </AppBar>
-      {/* <Toolbar /> */}
     </div>
   );
 }

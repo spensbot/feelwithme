@@ -1,20 +1,19 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Switch, Route } from 'react-router-dom'
-import Error from '../pages/Error'
+import BasicError from './basic/BasicError'
 import Login from '../pages/Login'
 import Messages from '../pages/Messages'
 import About from '../pages/About'
 import User from '../pages/User'
-import tags from './gqlTags'
+import tags from '../gqlTags'
 
 export default () => {
   const { loading, error, data } = useQuery(tags.readMe)
   if (loading) return <Login isLoading/>
   if (error) {
     console.log(error)
-
-    return <Error error={error}/>
+    return <BasicError />
   }
 
   const me = data.me

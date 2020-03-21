@@ -26,14 +26,49 @@ const state = {
     }
   },
 
+}
+
+const stateMap = {
+  user: {
+    byId: {
+
+    },
+    query: (idArray, params) => {
+      
+    },
+    mutate: (idArray, params) => {
+      
+    }
+  },
+
+  artist: {
+    byId: {
+
+    },
+    query: (idArray, params) => {
+
+    }
+  }
+}
+
+const getState = stateRequest => {
+
+  let loading
+  let error
+  let data
+
+  for (let [key, value] of Object.entries(stateRequest)) {
+    stateMap[key]
+  }
+
+  return {
+    loading,
+    error,
+    data
+  }
 
 }
 
-export default getState(map){
-  
-}
-
-export default get
 
 
 

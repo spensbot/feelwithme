@@ -87,7 +87,9 @@ class FwmAPI extends DataSource {
           ]
         },
       ]
-    })
+    }).sort( {sent: 1} )
+
+    //MyModel.distinct('_id', { foo: 'bar' }, function(error, ids)
 
     return messages
   }
@@ -117,6 +119,17 @@ class FwmAPI extends DataSource {
     })
 
     return messagedUsers
+  }
+
+  async getNewMessages() {
+    const newMessages = await Message.find( {
+      $and: [
+        { to: this.context.user },
+        { viewed: null }
+      ]
+    })
+
+    return newMessages
   }
 
 //-----------------------     MUTATIONS     --------------------

@@ -2,22 +2,27 @@ import React from 'react'
 import Header from './layout/Header'
 import Footer from './layout/Footer'
 import SiteContainer from './basic/SiteContainer'
+import Notification from './layout/Notification'
 
-export default function Layout({children, me, dontUseHeader, dontUseFooter, dontUseContainer, fixHeight}) {
+export default function Layout({children, dontUseHeader, dontUseFooter, dontUseContainer, fixHeight}) {
 
   const fixHeightStyle = {
-    height: '100vh',
     maxHeight: '100vh'
+  }
+
+  const style = {
+    minHeight: '100vh'
   }
 
   return (
     <>
       {dontUseHeader ? null : 
       <><Header /><Header fixed/></>}
-      <SiteContainer dontUseContainer={dontUseContainer} style={fixHeight ? fixHeightStyle : null}>
+      <SiteContainer dontUseContainer={dontUseContainer} style={fixHeight ? fixHeightStyle : style}>
       {children}
       {dontUseFooter ? null : <Footer />}
       </SiteContainer>
+      <Notification />
     </>
   )
 }

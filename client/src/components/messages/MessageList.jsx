@@ -2,7 +2,7 @@ import React from 'react'
 import ListItem from './MessageListItem'
 import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
-import tags from '../gqlTags'
+import tags from '../../gqlTags'
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 

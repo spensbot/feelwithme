@@ -3,31 +3,38 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box'
 import { makeStyles, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
-import tags from '../gqlTags'
+import tags from '../../gqlTags'
 import { useParams } from 'react-router-dom'
+import Divider from '../basic/Divider';
+
+const selectedBorderWidth = 2
+const padding = 8
 
 const useStyles = makeStyles(theme => ({
+  
 
   listItemText: {
-      marginBottom: theme.spacing(-.5),
-      padding: 0
+      
   },
   avatar: {
-      width: theme.spacing(10),
-      height: theme.spacing(10),
+      width: theme.spacing(8),
+      height: theme.spacing(8),
       marginRight: theme.spacing(2)
   },
   percentage: {
       fontSize: '2em'
   },
+  notSelected: {
+    padding: `${padding}px`
+  },
   selected: {
-    border: '2px solid',
-    borderColor: theme.palette.primary.main
+    border: `${selectedBorderWidth}px solid`,
+    borderColor: theme.palette.primary.main,
+    padding: `${padding - selectedBorderWidth}px`
   }
 }))
 
@@ -46,7 +53,7 @@ function MessageUserListItem({userId}) {
     return <h1>Error</h1>
   }
 
-  const root = (userId === id) ? classes.selected : null
+  const root = (userId === id) ? classes.selected : classes.notSelected
 
   return (
     <>
@@ -58,7 +65,7 @@ function MessageUserListItem({userId}) {
               <ListItemText className={classes.listItemText} primary={data.user.displayName} secondary={null} />
           </Box>
       </ListItem>
-      {/* <Divider /> */}
+      {/* <Divider color="#77777755" /> */}
     </>
   )
 }

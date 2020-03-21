@@ -9,8 +9,9 @@ import Config from '../config'
 import { Redirect } from 'react-router-dom'
 
 import { useQuery } from '@apollo/react-hooks'
-import tags from '../components/gqlTags'
+import tags from '../gqlTags'
 import About from './About'
+import BasicError from '../components/basic/BasicError'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '5em',
     fontFamily: 'Dancing Script',
     fontWeight: 'lighter',
+    color: '#111111',
     margin: 0
   },
   info: {
@@ -31,7 +33,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing()
   },
   fab: {
-    backgroundColor: "rgba(0,0,0,0)", 
     border: "1px solid rgba(0,0,0,.3)"
   },
   accountCircle: {
@@ -41,11 +42,13 @@ const useStyles = makeStyles(theme => ({
 
 //--------------------     REACT COMPONENT     --------------------
 
-export default function Login({isLoading, me}){
+export default function Login(){
 
   const classes = useStyles()
 
   const { loading, error, data } = useQuery(tags.readMe)
+
+  if (error) return <BasicError />
 
   if (data && data.me) {
     return <Redirect to={'/users/' + data.me.id} />
@@ -59,7 +62,7 @@ export default function Login({isLoading, me}){
         <img src={Config.homeRoute + "/images/logo512nbg.png"} alt="Feel With Me Logo Icon" width="250em"/>
         { loading ? 
           <div><CircularProgress /><p>Loading Your Info</p></div> :
-          <Button href={Config.serverRoutes.authUrlSpotify}>login with spotify to get started</Button>
+          <Button variant="outlined" href={Config.serverRoutes.authUrlSpotify}>login with spotify to get started</Button>
         }
         <Box flex="3 1 auto"/>
       </div>

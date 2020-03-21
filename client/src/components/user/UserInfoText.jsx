@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Button, Box, Divider, TextField, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { Link } from 'react-router-dom'
-import gqlTags from '../gqlTags'
+import gqlTags from '../../gqlTags'
 import { useMutation } from '@apollo/react-hooks'
 
 const useStyles = makeStyles(theme => ({

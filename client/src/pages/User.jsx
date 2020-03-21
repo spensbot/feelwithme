@@ -12,7 +12,9 @@ import BasicList from '../components/user/SpotifyList'
 import MatchDescription from '../components/user/MatchDescription'
 import Layout from '../components/Layout'
 import Spacer from '../components/basic/Spacer'
-import tags from '../components/gqlTags'
+import tags from '../gqlTags'
+import BasicLoading from '../components/basic/BasicLoading'
+import BasicError from '../components/basic/BasicError'
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,12 +34,12 @@ export default () => {
   const { loading, error, data } = useQuery(tags.readUser, {variables: {id: id}})
 
   if (loading) {
-    return <h1>"Hey Spotify, can we have some info please?"</h1>
+    return <BasicLoading />
   }
 
   if (error) {
     console.log(error)
-    return <h1>There was an Error</h1>
+    return <BasicError />
   }
 
   const isMe = data.me.id === id

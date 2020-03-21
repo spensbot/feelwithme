@@ -93,7 +93,8 @@ function reduceTrack(track){
     name: track.name,
     artistName: track.artists[0].name,
     spotifyUrl: track.external_urls.spotify,
-    imageUrl: null
+    imageUrl: null,
+    popularity: track.popularity
   }
 
   if (track.album.images[0]) {
@@ -108,7 +109,8 @@ function reduceArtist(artist){
     id: artist.id,
     name: artist.name,
     spotifyUrl: artist.external_urls.spotify,
-    imageUrl: null
+    imageUrl: null,
+    popularity: artist.popularity
   }
 
   if (artist.images[0]) {

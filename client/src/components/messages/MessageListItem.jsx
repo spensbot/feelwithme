@@ -42,7 +42,7 @@ export default ({ isOutgoing, content, timeStamp }) => {
 
   return (
     <div className={root}>
-      <Card className={card}>
+      <Card className={card} elevation="0">
         <Typography>
           {content}
         </Typography>

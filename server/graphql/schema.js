@@ -9,8 +9,11 @@ module.exports = gql`
     user(id: ID!): User
     allMessages: [Message!]!
     scopedMessages(id: ID!): [Message!]!
+    newMessages: [Message!]!
     messagedUsers: [ID!]!
     matches(limit: Int): [Match!]!
+    artists(spotifyIds: [ID!]!): [Artist!]!
+    tracks(spotifyIds: [ID!]!): [Track!]!
   }
   
   type Mutation {
@@ -61,6 +64,7 @@ module.exports = gql`
     name: String!
     spotifyUrl: URL!
     imageUrl: URL
+    popularity: Int!
   } 
 
   type Track {
@@ -69,6 +73,7 @@ module.exports = gql`
     spotifyUrl: URL!
     imageUrl: URL
     artistName: String!
+    popularity: Int!
   }
 
 #------------     TYPE DEFS     -----------

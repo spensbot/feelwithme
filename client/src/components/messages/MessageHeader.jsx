@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
-import tags from '../gqlTags'
+import tags from '../../gqlTags'
 import { useParams, Redirect, Link } from 'react-router-dom'
 import { makeStyles, Button, Avatar } from '@material-ui/core'
 import gql from 'graphql-tag' 
