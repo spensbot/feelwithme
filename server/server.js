@@ -40,7 +40,7 @@ app.use('/auth', auth)
 
 //---------------     Apply the express app     -------------
 const corsOptions = {
-  origin: config.corsUrl,
+  origin: config.appUrl,
   credentials: true
 }
 
