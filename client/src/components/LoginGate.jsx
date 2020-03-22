@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Switch, Route } from 'react-router-dom'
-import BasicError from './basic/BasicError'
+import ErrorPage from './basic/ErrorPage'
 import Login from '../pages/Login'
 import Messages from '../pages/Messages'
 import About from '../pages/About'
@@ -13,7 +13,7 @@ export default () => {
   if (loading) return <Login isLoading/>
   if (error) {
     console.log(error)
-    return <BasicError />
+    return <ErrorPage />
   }
 
   const me = data.me

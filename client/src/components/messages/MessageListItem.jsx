@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
-import { makeStyles, rgbToHex } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles( theme => ({
   outgoing: {
@@ -42,7 +42,7 @@ export default ({ isOutgoing, content, timeStamp }) => {
 
   return (
     <div className={root}>
-      <Card className={card} elevation="0">
+      <Card className={card} elevation={0}>
         <Typography>
           {content}
         </Typography>

@@ -5,16 +5,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChatIcon from '@material-ui/icons/Chat';
-import Badge from '@material-ui/core/Badge';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {Link} from 'react-router-dom'
-import Config from '../../config'
 import Avatar from '@material-ui/core/Avatar'
 import MainMenu from './MainMenu'
 import UserMenu from './UserMenu'
 import tags from '../../gqlTags'
 import {useQuery} from '@apollo/react-hooks'
+import MessagesButton from './MessagesButton'
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -89,11 +86,7 @@ export default ({fixed}) => {
           <Typography variant="h6" className={classes.title}>
             Feel with me
           </Typography>
-          <IconButton component={Link} to={Config.routes.messages} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <Badge badgeContent={4} color="primary">
-                <ChatIcon />
-            </Badge>
-          </IconButton>
+          <MessagesButton />
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={openUserMenu}>
             {data.me ? <Avatar src={data.me.imageUrl}/> : <AccountCircleIcon />}
           </IconButton>

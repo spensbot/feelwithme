@@ -147,7 +147,7 @@ class FwmAPI extends DataSource {
   async setMessageViewed( messageId ) {
     const message = await Message.findById(messageId)
     message.viewed = Date.now()
-    const newMessage = await message.save()
+    return await message.save()
   }
 
   async updateActiveUser( displayName, bio ) {

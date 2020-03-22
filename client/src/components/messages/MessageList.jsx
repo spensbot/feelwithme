@@ -5,10 +5,12 @@ import { useQuery } from '@apollo/react-hooks'
 import tags from '../../gqlTags'
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
+import ErrorComponent from '../basic/ErrorComponent'
+import LoadingComponent from '../basic/LoadingComponent'
 
 const useStyles = makeStyles(theme => ({
   root: {
-
+    
   },
 }))
 
@@ -19,11 +21,11 @@ export default () => {
   const {loading, error, data}=useQuery(tags.readScopedMessages, {variables: {id}})
 
   if (loading){
-    return <h1>loading</h1>
+    return <LoadingComponent />
   }
   
   if (error) {
-    return <h1>Error</h1>
+    return <ErrorComponent />
   }
 
   function getDateString(date){
@@ -32,7 +34,7 @@ export default () => {
   }
 
   return (
-    <Box flex="1 1 auto" justifyContent="start" overflow="scroll" maxHeight="75vh" paddingTop="2rem">
+    <Box flex="1 1 auto" justifyContent="start" overflow="hidden" maxHeight="75vh" paddingTop="2rem">
       {data.scopedMessages.map((message) => {
         const isOutgoing = message.from === id
         const content = message.content

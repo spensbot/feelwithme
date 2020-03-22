@@ -2,7 +2,6 @@ import React from 'react'
 import List from '@material-ui/core/List'
 import ListItem from './MessageUserListItem'
 import { makeStyles } from '@material-ui/core';
-import Divider from '../basic/Divider'
 
 const useStyles = makeStyles(theme => ({
   root: {

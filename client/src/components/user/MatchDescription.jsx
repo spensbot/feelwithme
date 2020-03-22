@@ -1,6 +1,23 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, Card, CardContent } from '@material-ui/core'
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+import ErrorComponent from '../basic/ErrorComponent'
+import LoadingComponent from '../basic/LoadingComponent'
+
+export const READ_MATCHES = gql`
+{
+  me{
+    id
+    topArtists{
+      id
+    }
+    topTracks{
+      id
+    }
+  }
+}`
 
 const useStyles = makeStyles(theme => ({
   heading: {
@@ -8,8 +25,15 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default () => {
+export default ({user}) => {
   const classes = useStyles()
+
+  const {loading, error, data} = useQuery(READ_MATCHES)
+
+  if(loading) return <LoadingComponent />
+  if(error) return <ErrorComponent />
+
+  const common = intersection(data.me.topArtists, user.topArtists)
 
   return (
     <Card>
@@ -23,4 +47,8 @@ export default () => {
       </CardContent>
     </Card>
   )
+}
+
+const intersection = (array1, array2) => {
+  return array1.filter(value => array2.includes(value))
 }

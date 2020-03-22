@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import tags from '../gqlTags'
 import About from './About'
-import BasicError from '../components/basic/BasicError'
+import ErrorPage from '../components/basic/ErrorPage'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,7 +48,7 @@ export default function Login(){
 
   const { loading, error, data } = useQuery(tags.readMe)
 
-  if (error) return <BasicError />
+  if (error) return <ErrorPage />
 
   if (data && data.me) {
     return <Redirect to={'/users/' + data.me.id} />

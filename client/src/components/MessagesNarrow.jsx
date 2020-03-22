@@ -1,5 +1,4 @@
 import React from "react";
-import Box from "@material-ui/core/Box"
 //Custom
 import MessageUserList from "../components/messages/MessageUserList"
 import MessageView from '../components/messages/MessageView'

@@ -7,8 +7,8 @@ import MessagesFullscreen from '../components/MessagesFullscreen'
 import NoMessages from '../components/messages/NoMessages'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag' 
-import BasicError from "../components/basic/BasicError";
-import BasicLoading from '../components/basic/BasicLoading'
+import ErrorPage from "../components/basic/ErrorPage";
+import LoadingPage from "../components/basic/LoadingPage";
 
 export const READ_MESSAGED_USERS = gql`
 {
@@ -31,13 +31,13 @@ export default () => {
 
   if(loading){
     return (
-      <BasicLoading />
+      <LoadingPage />
     )
   }
   
   if(error){
     return (
-      <BasicError />
+      <ErrorPage />
     )
   }
 

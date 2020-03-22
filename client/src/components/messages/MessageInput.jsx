@@ -2,27 +2,63 @@ import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useApolloClient } from '@apollo/react-hooks'
 import { useParams } from 'react-router-dom'
 import gql from 'graphql-tag' 
+import {setAlert} from '../../localCache'
 
 const CREATE_MESSAGE = gql`
 mutation CreateMessage($to: ID! $content: String!){
   createMessage(to: $to content: $content){
+    id
     to
     from
     sent
     content
+    viewed
   }
 }`
 
-export default function MessageInput({}) {
+const READ_SCOPED_MESSAGES = gql`
+query scopedMessages($id: ID!){
+  scopedMessages(id: $id){
+    id
+    from
+    to
+    content
+    sent
+    viewed
+  }
+}`
+
+export default function MessageInput({rerender}) {
 
   const {id} = useParams()
 
   const [message, setMessage] = useState("")
 
-  const [sendMessage, {data, loading, error}] = useMutation(CREATE_MESSAGE)
+  const client = useApolloClient()
+
+  const onCompleted = data => {
+    setAlert(client, 'success', 'Message Sent', 2000)
+    setMessage("")
+  }
+  const onError = error => {
+    setAlert(client, 'error', 'Message Send Failed')
+  }
+  const update = (cache, {data : { createMessage } }) => {
+    const { scopedMessages } = cache.readQuery({ query: READ_SCOPED_MESSAGES, variables: {id: id} })
+    console.log(createMessage)
+    const updatedScopedMessages = scopedMessages.concat([createMessage])
+    console.log(updatedScopedMessages)
+    cache.writeQuery({
+      query: READ_SCOPED_MESSAGES,
+      data: { scopedMessages: updatedScopedMessages }
+    })
+    rerender()
+  }
+
+  const [sendMessage] = useMutation(CREATE_MESSAGE, {onCompleted: onCompleted, onError: onError, update: update})
   
   function onChange(e) {
     setMessage(e.target.value)

@@ -3,7 +3,8 @@ import { Button, Box, Divider, TextField, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { Link } from 'react-router-dom'
 import gqlTags from '../../gqlTags'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useApolloClient } from '@apollo/react-hooks'
+import {setAlert} from '../../localCache'
 
 const useStyles = makeStyles(theme => ({
   spacedButton: {
@@ -28,11 +29,7 @@ export default ({ isMe, user }) => {
 
   const [state, setState] = useState(initState)
 
-  const [updateProfile, {loading, error, data}] = useMutation(gqlTags.updateProfile)
-
-  const statusDisplay = null
-  // if (loading) statusDisplay = <h1>Saving Your Data</h1>
-  // if (error) statusDisplay = <h1>There was an Error. Please refresh and try again.</h1>
+  const client = useApolloClient()
 
   const setDisplayName = e => {
     setState({
@@ -40,20 +37,32 @@ export default ({ isMe, user }) => {
       displayNameEdit: e.target.value
     });
   };
-
   const setBio = e => {
     setState({
       ...state,
       bioEdit: e.target.value
     });
   };
-
   const setIsEditing = isEditing => {
     setState({
       ...initState,
       isEditing: isEditing
     });
   };
+
+  const onCompleted = data => {
+    setAlert(client, 'success', 'Profile Update', 2000)
+    setState(initState)
+  }
+  const onError = error => {
+    setAlert(client, 'error', 'Profile Update Failed')
+  }
+
+  const [updateProfile] = useMutation(gqlTags.updateProfile, {onCompleted: onCompleted, onError: onError})
+
+  const statusDisplay = null
+  // if (loading) statusDisplay = <h1>Saving Your Data</h1>
+  // if (error) statusDisplay = <h1>There was an Error. Please refresh and try again.</h1>
 
   const updateUserInfo = e => {
     updateProfile({ variables: { bio: state.bioEdit, displayName: state.displayNameEdit } })

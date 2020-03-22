@@ -13,7 +13,7 @@ module.exports = {
 
   Mutation: {
     createMessage: (_, {to, content}, {dataSources}) => dataSources.fwmAPI.createMessage(to, content),
-    setMessageViewed: (_, {messageId}, {dataSources}) => dataSources.fwmAPI.viewedMessage(messageId),
+    setMessageViewed: (_, {message}, {dataSources}) => dataSources.fwmAPI.viewedMessage(message),
     updateProfile: (_, {displayName, bio}, {dataSources}) => dataSources.fwmAPI.updateActiveUser(displayName, bio)
   },
 

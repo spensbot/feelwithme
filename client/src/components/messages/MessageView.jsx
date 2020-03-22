@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import MessageList from './MessageList'
 import MessageInput from './MessageInput'
 import MessageHeader from './MessageHeader'
@@ -7,7 +7,8 @@ import { useQuery } from '@apollo/react-hooks'
 import { useParams, Redirect } from 'react-router-dom'
 import gql from 'graphql-tag' 
 import config from '../../config'
-
+import LoadingComponent from '../basic/LoadingComponent'
+import ErrorComponent from '../basic/ErrorComponent'
 
 export const READ_USER_DATA = gql`
 query UserData($id: ID!){
@@ -26,15 +27,21 @@ export default ({header}) => {
 
   const {id} = useParams()
   const {loading, error, data} = useQuery(READ_USER_DATA, {variables: {id}})
+  const [dummy, setstate] = useState(null)
+
+  const rerender = () => {
+    console.log("WHEL please rerender")
+    setstate(1)
+  }
 
   if(loading){
     return (
-      <h1>Loading</h1>
+      <LoadingComponent />
     )
   }
   if(error){
     return (
-      <h1>Error</h1>
+      <ErrorComponent />
     )
   }
 
@@ -47,9 +54,8 @@ export default ({header}) => {
       {header ? <MessageHeader /> : null}
       <Box display="flex" flex="3 1 auto" flexDirection="column" mx="1rem" mb="1rem">
         <MessageList />
-        <MessageInput />
+        <MessageInput rerender={rerender}/>
       </Box>
     </Box>
-
   )
 }

@@ -13,8 +13,8 @@ import MatchDescription from '../components/user/MatchDescription'
 import Layout from '../components/Layout'
 import Spacer from '../components/basic/Spacer'
 import tags from '../gqlTags'
-import BasicLoading from '../components/basic/BasicLoading'
-import BasicError from '../components/basic/BasicError'
+import LoadingPage from '../components/basic/LoadingPage'
+import ErrorPage from '../components/basic/ErrorPage'
 
 
 const useStyles = makeStyles(theme => ({
@@ -34,12 +34,12 @@ export default () => {
   const { loading, error, data } = useQuery(tags.readUser, {variables: {id: id}})
 
   if (loading) {
-    return <BasicLoading />
+    return <LoadingPage />
   }
 
   if (error) {
     console.log(error)
-    return <BasicError />
+    return <ErrorPage />
   }
 
   const isMe = data.me.id === id

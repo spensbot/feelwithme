@@ -4,12 +4,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box'
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import tags from '../../gqlTags'
 import { useParams } from 'react-router-dom'
-import Divider from '../basic/Divider';
+import LoadingComponent from '../basic/LoadingComponent';
+import ErrorComponent from '../basic/ErrorComponent';
 
 const selectedBorderWidth = 2
 const padding = 8
@@ -46,11 +47,11 @@ function MessageUserListItem({userId}) {
   const {loading, error, data}=useQuery(tags.readUserShallow, {variables: {id: userId}})
 
   if (loading){
-    return <h1>loading</h1>
+    return <LoadingComponent />
   }
   
   if (error) {
-    return <h1>Error</h1>
+    return <ErrorComponent />
   }
 
   const root = (userId === id) ? classes.selected : classes.notSelected

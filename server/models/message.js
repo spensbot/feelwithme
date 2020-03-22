@@ -7,7 +7,7 @@ const messageSchema = mongoose.Schema({
   to: { type: ObjectId, ref: 'User', index: true, required: true },
   content: { type: String, required: true},
   sent: { type: Date, default: Date.now() },
-  viewed: Date
+  viewed: { type: Date, default: null }
 })
 
 const Message = mongoose.model('Message', messageSchema)

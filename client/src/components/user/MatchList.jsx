@@ -1,20 +1,36 @@
 import React from "react";
 import List from "@material-ui/core/List";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { useQuery } from '@apollo/react-hooks'
-import {GET_MATCHES} from '../../gqlTags'
 import ListItem from './MatchListItem'
-import tags from '../../gqlTags'
+import gql from 'graphql-tag'
+import LoadingComponent from "../basic/LoadingComponent";
+import ErrorComponent from "../basic/ErrorComponent";
+
+export const READ_MATCHES = gql`
+{
+  matches{
+    id
+    user{
+      id
+      displayName
+      spotifyProfileUrl
+      bio
+      imageUrl
+    }
+    trackCount
+    artistCount
+    weightedMatch
+  }
+}`
 
 export default () => {
 
-  const { loading, error, data } = useQuery(tags.readMatches)
+  const { loading, error, data } = useQuery(READ_MATCHES)
 
   if (loading) {
     return (
       <div className="song-list">
-        <h1>Your Matches</h1>
-        <CircularProgress />
+        <LoadingComponent />
       </div>
     )
   }
@@ -22,8 +38,7 @@ export default () => {
   if (error) {
     return (
       <div>
-        <h3>There Was an Error</h3>
-        <p>Try Refreshing</p>
+        <ErrorComponent />
       </div>
     )
   }

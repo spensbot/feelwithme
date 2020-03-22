@@ -1,12 +1,15 @@
+let alertTimeout = null
+
 export const themeIds = {
   DARK: 'DARK',
   LIGHT: 'LIGHT'
 }
 
-export const messageTypes = {
-  ERROR: 'ERROR',
-  WARNING: 'WARNING',
-  INFO: 'INFO'
+export const alertTypes = {
+  error: 'error',
+  warning: 'warning',
+  info: 'info',
+  success: 'success'
 }
 
 export const initCache = cache => {
@@ -21,41 +24,41 @@ export const initCache = cache => {
   cache.writeData({
     data: {
       theme: theme,
-      notification: {
-        type: null,
-        message: null,
-        timeOut: null
-      }
+      alertType: alertTypes.success,
+      alert: null
     }
   })
 }
 
-const resetNotification = (client) => () => {
+export const removeAlert = client => {
+  if (alertTimeout) clearTimeout(alertTimeout)
+
   client.writeData({
     data: {
-      notification: {
-        type: null,
-        message: null,
-        timeOut: null
-      }
+      alert: null
     }
   })
 }
 
-export const setNotification = (client, type, message, duration) => {
+export const setAlert = (client, type, alert, duration) => {
+  removeAlert(client)
+  
   client.writeData({
     data: {
-      notification: {
-        type: type,
-        message: message,
-        timeOut: setTimeout(resetNotification(client), duration)
-      }
+      alertType: type,
+      alert: alert
     }
   })
+
+  if (duration) {
+    alertTimeout = setTimeout( () => {
+      alertTimeout = null
+      removeAlert(client)
+    }, duration)
+  }
 }
 
 export const setTheme = (client, theme) => {
-
   localStorage.setItem('theme', theme)
 
   client.writeData({

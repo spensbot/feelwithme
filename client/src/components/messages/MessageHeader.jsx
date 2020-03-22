@@ -1,11 +1,11 @@
 import React from 'react'
-import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
-import tags from '../../gqlTags'
 import { useParams, Redirect, Link } from 'react-router-dom'
 import { makeStyles, Button, Avatar } from '@material-ui/core'
 import gql from 'graphql-tag' 
 import config from '../../config'
+import LoadingComponent from '../basic/LoadingComponent'
+import ErrorComponent from '../basic/ErrorComponent'
 
 
 export const READ_USER_DATA = gql`
@@ -44,12 +44,12 @@ export default () => {
 
   if(loading){
     return (
-      <h1>Loading</h1>
+      <LoadingComponent />
     )
   }
   if(error){
     return (
-      <h1>Error</h1>
+      <ErrorComponent />
     )
   }
 
