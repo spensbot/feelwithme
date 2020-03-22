@@ -5,7 +5,9 @@ const express = require('express')
 //CUSTOM
 const auth = require('./routes/auth')
 const sessionParser = require('./config/sessionParser')
-const vars = require('./config/vars')
+const config = require('./config')
+
+console.log(config)
 
 //---------------     MONGOOSE CONFIG     ----------------
 
@@ -38,7 +40,7 @@ app.use('/auth', auth)
 
 //---------------     Apply the express app     -------------
 const corsOptions = {
-  origin: vars.corsUrl,
+  origin: config.corsUrl,
   credentials: true
 }
 
@@ -55,6 +57,6 @@ app.get('*', (req, res) => {
 console.log("process.env.NODE_ENV: " + process.env.NODE_ENV)
  
 //---------------     START THE SERVER     ----------------
-app.listen({ port: vars.serverPort }, () =>
-  console.log(`🚀 Server ready at http://localhost:${vars.serverPort}${server.graphqlPath}`)
+app.listen({ port: config.serverPort }, () =>
+  console.log(`🚀 Server ready at ${config.serverUrl}${server.graphqlPath}`)
 )

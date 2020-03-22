@@ -1,5 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
-const apiRoutes = require('../config/vars').spotifyApi
+const apiRoutes = require('../config').spotifyApi
 const axios = require('axios')
 const qs = require('querystring')
 

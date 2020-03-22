@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 var passport = require('passport')
 //CUSTOM
-var vars = require('../config/vars')
+var config = require('../config')
 
 //Here we direct the user to spotify, and tell spotify what information we want to access.
 router.get('/spotify', passport.authenticate('spotify', {
@@ -14,14 +14,14 @@ router.get('/spotify', passport.authenticate('spotify', {
 //A cookie is also created and sent to the user for future authorization
 router.get('/spotify/callback', passport.authenticate('spotify', { failureRedirect: '/login' }),
     function (req, res) {
-        res.redirect(vars.appUrl)
+        res.redirect(config.appUrl)
     }
 );
 
 //Disables the persistant user session created by passport.
 router.get('/logout', function (req, res) {
     req.logout();
-    res.redirect(vars.appUrl);
+    res.redirect(config.appUrl);
 });
 
 module.exports = router;

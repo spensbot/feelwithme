@@ -1,7 +1,7 @@
 const User = require('../models/user')
 const Match = require('../models/match')
 const generateMatches = require('./generateMatches')
-const vars = require('../config/vars')
+const config = require('../config')
 const axios = require('axios')
 
 //Get the users top artists and tracks
@@ -27,7 +27,7 @@ async function initializeUser(user) {
 async function populateTopTracks(user) {
 
     let requestConfig = {
-        url: vars.spotifyApi.url + vars.spotifyApi.userTopTracks,
+        url: config.spotifyApi.url + config.spotifyApi.userTopTracks,
         method: 'get',
         headers: { Authorization: 'Bearer ' + user.spotifyAccessToken},
         responseType: 'json',
@@ -49,7 +49,7 @@ async function populateTopTracks(user) {
 async function populateTopArtists(user) {
 
     let requestConfig = {
-        url: vars.spotifyApi.url + vars.spotifyApi.userTopArtists,
+        url: config.spotifyApi.url + config.spotifyApi.userTopArtists,
         method: 'get',
         headers: { Authorization: 'Bearer ' + user.spotifyAccessToken},
         responseType: 'json',

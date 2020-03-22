@@ -1,13 +1,16 @@
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
-var vars = require('../config/vars');
+var config = require('../config');
 
 const sessionParser = session({
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  cookie: vars.cookieParams,
+  cookie: {
+    maxAge: 1000*60*60*24*5,
+    secure: config.secureCookies
+  },
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 })
 

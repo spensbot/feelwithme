@@ -2,7 +2,7 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 const passport = require('passport');
 const User = require('../models/user');
 const initializeUser = require('../utils/initializeUser');
-const vars = require('../config/vars');
+const config = require('../config');
 
 passport.serializeUser(function (user, done) {
   done(null, user._id);
@@ -18,7 +18,7 @@ passport.use(new SpotifyStrategy(
   {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: vars.spotifyCallback
+      callbackURL: config.spotifyCallback
   },
   function (accessToken, refreshToken, expiresIn, profile, done) {
       User.findOne({ spotifyId: profile._json.id }, function (err, user) {

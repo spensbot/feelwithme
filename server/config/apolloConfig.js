@@ -5,6 +5,7 @@ const resolvers = require('../graphql/resolvers')
 const FwmAPI = require('../graphql/fwmDatasource')
 const SpotifyAPI = require('../graphql/spotifyDatasource')
 const User = require('../models/user')
+const config = require('../config')
 
 module.exports = function(){
   const dataSources = () => ({
@@ -27,7 +28,7 @@ module.exports = function(){
     resolvers,
     dataSources,
     context,
-    introspection: true,
-    playground: true,
+    introspection: !config.isDeployed,
+    playground: !config.isDeployed,
   })
 }
