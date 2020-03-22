@@ -51,6 +51,8 @@ server.applyMiddleware({
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/404.html')
 })
+
+console.log("process.env.NODE_ENV: " + process.env.NODE_ENV)
  
 //---------------     START THE SERVER     ----------------
 app.listen({ port: vars.serverPort }, () =>
