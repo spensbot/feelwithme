@@ -4,7 +4,9 @@
   "description": "A social media site which allows users to connect via mutual music interest",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-prebuild": "cd server",
+    "start": "node server.js"
   },
   "author": "Spenser Saling",
   "license": "ISC",
@@ -21,5 +23,9 @@
     "mongoose": "^5.8.11",
     "passport": "^0.4.1",
     "passport-spotify": "^1.1.0"
+  },
+  "engines": {
+    "node": "12.14.0",
+    "npm": "6.13.4"
   }
 }
