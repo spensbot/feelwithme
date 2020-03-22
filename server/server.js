@@ -7,8 +7,6 @@ const auth = require('./routes/auth')
 const sessionParser = require('./config/sessionParser')
 const config = require('./config')
 
-console.log(config)
-
 //---------------     MONGOOSE CONFIG     ----------------
 
 require('./config/mongooseConfig')
@@ -53,8 +51,6 @@ server.applyMiddleware({
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/404.html')
 })
-
-console.log("process.env.NODE_ENV: " + process.env.NODE_ENV)
  
 //---------------     START THE SERVER     ----------------
 app.listen({ port: config.serverPort }, () =>

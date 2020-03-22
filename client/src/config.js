@@ -7,7 +7,7 @@ let serverUrl = httpProtocol + '://' + serverHost + serverPort
 
 const Config = {
     serverUrl: serverUrl,
-    homeRoute: dev ? '' : '/feelwithme',
+    homeRoute: "",
     serverRoutes: {
         graphQLUrl: serverUrl + '/graphql',
         authUrlSpotify: serverUrl + '/auth/spotify',
