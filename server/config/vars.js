@@ -16,9 +16,9 @@ const vars = {
       maxAge: 1000*60*60*24*5,
       secure: true
   },
-  serverUrl: "https://feelwithme-backend.herokuapp.com",
-  appUrl: "https://spensbot.github.io/feelwithme",
-  corsUrl: "https://spensbot.github.io",
+  serverUrl: "https://feelwithme.herokuapp.com",
+  appUrl: "https://feelwithme.netlify.com",
+  corsUrl: "https://feelwithme.netlify.com",
   dbUri: process.env.DB_URI + 'feelwithme' + "?retryWrites=true&w=majority"
 }
 

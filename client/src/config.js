@@ -1,13 +1,12 @@
 //Determine if the app is running on a local dev server (vs. deployed)
 let dev = (window.location.hostname === 'localhost')
 let httpProtocol = dev ? 'http' : 'https'
-let serverHost = dev ? 'localhost' : 'feelwithme-backend.herokuapp.com'
+let serverHost = dev ? 'localhost' : 'feelwithme.herokuapp.com'
 let serverPort = dev ? ':8000' : ''
 let serverUrl = httpProtocol + '://' + serverHost + serverPort
 
 const Config = {
     serverUrl: serverUrl,
-    //wsServerUrl: wsProtocol + '://' + serverHost + serverPort + wsEndpoint,
     homeRoute: dev ? '' : '/feelwithme',
     serverRoutes: {
         graphQLUrl: serverUrl + '/graphql',
