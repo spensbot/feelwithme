@@ -7,11 +7,7 @@ const sessionParser = session({
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  cookie: {
-    maxAge: 1000*60*60*24*5,
-    secure: config.secureCookies,
-    sameSite: "none"
-  },
+  cookie: config.cookieSettings,
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 })
 

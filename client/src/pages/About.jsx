@@ -30,8 +30,8 @@ export default ({ dontUseHeader }) => {
         <br />
         <Typography element="p">
           Feel with me "matches" spotify users based on their top 50 songs and
-          artists. This way, you can connect with people who care about the same
-          music as you. This is also a great tool for finding new music.
+          artists. Connect with people who care about the same
+          music as you. It's also a great tool for finding new music.
         </Typography>
         <Spacer />
         <Typography
@@ -42,11 +42,10 @@ export default ({ dontUseHeader }) => {
         </Typography>
         <br />
         <Typography element="p">
-          Okay, maybe it's not that advanced... But nonetheless, our servers
-          work hard to bring you the best matches.
+          Our servers work hard to deliver the best matches.
         </Typography>
         <br />
-        <Typography
+        {/* <Typography
           element="h3"
           variant="h4"
         >
@@ -56,7 +55,7 @@ export default ({ dontUseHeader }) => {
         <Typography element="p">
           Okay, maybe the're not that cute... But nonetheless, our servers
           work hard to bring you the best matches.
-        </Typography>
+        </Typography> */}
         
         <Box width="100%" display="flex" justifyContent="center">
           <Box maxWidth="30rem">

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 //Custom
 import MatchList from '../components/user/MatchList'
 import UserInfo from '../components/user/UserInfo'
-import BasicList from '../components/user/SpotifyList'
+import SpotifyList from '../components/user/SpotifyList'
 import MatchDescription from '../components/user/MatchDescription'
 import Layout from '../components/Layout'
 import Spacer from '../components/basic/Spacer'
@@ -54,13 +54,13 @@ export default () => {
 
       <Box display="flex" flexWrap="wrap">
         <div className={classes.list}>
-          <BasicList isMe={isMe} items={data.user.topArtists} me={data.me} />
+          <SpotifyList isMe={isMe} items={data.user.topArtists} me={data.me} />
         </div>
 
         <Spacer />
 
         <div className={classes.list}>
-          <BasicList isMe={isMe} items={data.user.topTracks} me={data.me} isTracks />
+          <SpotifyList isMe={isMe} items={data.user.topTracks} me={data.me} isTracks />
         </div>
       </Box>
 

@@ -13,6 +13,9 @@ import LoadingPage from "../components/basic/LoadingPage";
 export const READ_MESSAGED_USERS = gql`
 {
   messagedUsers
+  matches {
+    id
+  }
 }`
 
 export default () => {
@@ -41,7 +44,7 @@ export default () => {
     )
   }
 
-  if (data.messagedUsers.count == 0) {
+  if (data.messagedUsers.length == 0) {
     return (
       <NoMessages />
     )

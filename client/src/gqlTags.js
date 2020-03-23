@@ -26,12 +26,14 @@ query User($id: ID!){
     imageUrl
 
     topTracks{
+      id
       name
       artistName
       spotifyUrl
       imageUrl
     }
     topArtists{
+      id
       name
       spotifyUrl
       imageUrl
@@ -48,12 +50,14 @@ query User($id: ID!){
     imageUrl
 
     topTracks{
+      id
       name
       artistName
       spotifyUrl
       imageUrl
     }
     topArtists{
+      id
       name
       spotifyUrl
       imageUrl

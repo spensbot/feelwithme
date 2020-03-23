@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
 
     //Custom FWM fields
     isInitialized: { type: Boolean, default: false },
+    initializationTime: Number,
     lastInitialized: Date,
     darkMode: { type: Boolean, default: true},
     displayName: String,

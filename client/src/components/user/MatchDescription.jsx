@@ -35,6 +35,8 @@ export default ({user}) => {
 
   const common = intersection(data.me.topArtists, user.topArtists)
 
+  console.log(common)
+
   return (
     <Card>
       <CardContent>

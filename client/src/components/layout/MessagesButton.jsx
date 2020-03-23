@@ -24,8 +24,6 @@ export default () => {
   const classes = useStyles()
   const {data, loading, error} = useQuery(GET_NEW_MESSAGES)
 
-  console.log(data)
-
   const numNewMessages = data ? data.newMessages.length : 0
 
   return (

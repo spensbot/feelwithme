@@ -15,7 +15,7 @@ export default ({isMe, isTracks, items, me}) => {
             <h1>{title}</h1>
             <List>
                 {items.map((item, index) => {
-                    return <ListItem key={index} item={item} isMatch={isInList(item._id, compareList)}/>
+                    return <ListItem key={index} item={item} isMatch={isInList(item.id, compareList)}/>
                 })}
             </List>
         </div>
@@ -24,7 +24,7 @@ export default ({isMe, isTracks, items, me}) => {
 
 function isInList(id, list){
     const match = list.find(item => {
-        return (item._id === id)
+        return (item.id === id)
     })
     if (match === undefined) {
         return false

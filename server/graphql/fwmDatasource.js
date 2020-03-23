@@ -32,7 +32,7 @@ class FwmAPI extends DataSource {
   async getActiveUserMatches(limit){
 
     const matches1 = await Match.find({user1: this.context.user.id})
-    .sort({'weightedMatch': -1})
+    .sort({'weightedMatch': 1})
     .limit(limit)
     .populate('user2')
 
@@ -42,7 +42,7 @@ class FwmAPI extends DataSource {
     })
 
     const matches2 = await Match.find({user2: this.context.user.id})
-    .sort({'weightedMatch': -1})
+    .sort({'weightedMatch': 1})
     .limit(limit)
     .populate('user1')
 
@@ -51,7 +51,7 @@ class FwmAPI extends DataSource {
       return match
     })
 
-    const sortedMatches = matches1Mod.concat(matches2Mod).sort((a, b) => a.weightedMatch - b.weightedMatch)
+    const sortedMatches = matches1Mod.concat(matches2Mod).sort((a, b) => b.weightedMatch - a.weightedMatch)
 
     const matches = sortedMatches.slice(0, limit)
 
