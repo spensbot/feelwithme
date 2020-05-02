@@ -6,7 +6,7 @@ module.exports = {
     scopedMessages: (_, {id}, {dataSources}) => dataSources.fwmAPI.getScopedMessages(id),
     newMessages: (_, __, {dataSources}) => dataSources.fwmAPI.getNewMessages(),
     messagedUsers: (_, __, {dataSources}) => dataSources.fwmAPI.getMessagedUsers(),
-    matches: (_, {limit} = {limit: 10}, {dataSources}) => dataSources.fwmAPI.getActiveUserMatches(limit),
+    matches: (_, {limit}, {dataSources}) => dataSources.fwmAPI.getActiveUserMatches(limit),
     tracks: (_, {spotifyIds}, {dataSources}) => dataSources.spotifyAPI.getTracks(spotifyIds),
     artists: (_, {spotifyIds}, {dataSources}) => dataSources.spotifyAPI.getArtists(spotifyIds),
   },

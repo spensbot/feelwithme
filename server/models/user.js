@@ -12,7 +12,7 @@ const mongoose = require('mongoose')
 // }
 
 const userSchema = new mongoose.Schema({
-    spotifyId: { type: String, unique: true, required: true }, //Originally "id"
+    spotifyId: { type: String, unique: true, required: true, index: true }, //Originally "id"
     spotifyProfileUrl: String, //Originally "external_urls.spotify"
     spotifyImageUrl: String, //Originally "images[0].url"
     spotifyDisplayName: String, //Originally "display_name"
