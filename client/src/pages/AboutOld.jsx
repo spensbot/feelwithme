@@ -6,11 +6,6 @@ import Layout from "../components/Layout";
 import config from "../config";
 import { Box } from "@material-ui/core";
 import Spacer from "../components/basic/Spacer";
-import StepSection from '../components/about/StepSection'
-import spotifyLogo from '../images/Spotify_Logo_RGB_Green.png'
-import matchesExample from '../images/Matches.png'
-import matchedArtists from '../images/MatchedArtists.jpg'
-import Divider from '../components/basic/Divider'
 
 const useStyles = makeStyles(theme => ({
   paragraphHeader: {
@@ -26,20 +21,23 @@ export default ({ dontUseHeader }) => {
     <div>
       <Layout dontUseHeader={dontUseHeader}>
         <Spacer />
-        <Typography element="h1" variant="h2">
+        <Typography
+          element="h1"
+          variant="h2"
+        >
           What is Feel With Me?
         </Typography>
         <br />
-        <p> Feel With Me is all about connecting people who love the same music. It's also a great tool for finding new music. </p>
-        <p> Lets see how it works </p>
+        <Typography element="p">
+          Feel with me "matches" spotify users based on their top 50 songs and
+          artists. Connect with people who care about the same
+          music as you. It's also a great tool for finding new music.
+        </Typography>
         <Spacer />
-        <StepSection num={1} title="Login With Spotify" description="This gives us access to your top 50 songs and artists" imageSrc={spotifyLogo} imageAlt="Spotify Logo"/>
-        <Spacer />
-        <StepSection num={2} title="Connect" description='You are "Matched" with other users based on shared songs and artists. When you find that person that gets your music taste, send them a message!' imageSrc={matchesExample} imageAlt="Matches Example"/>
-        <Spacer />
-        <StepSection num={3} title="Discover" description="Once logged in, you can view anyone's profile. Shared interests are marked with a green check. " imageSrc={matchedArtists} imageAlt="Matched Artists Example" />
-        <Spacer />
-        <Typography element="h3" variant="h4">
+        <Typography
+          element="h3"
+          variant="h4"
+        >
           Backed by an advanced algorithm
         </Typography>
         <br />
