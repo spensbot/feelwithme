@@ -6,13 +6,7 @@ import Box from '@material-ui/core/Box'
 import { makeStyles, Typography } from '@material-ui/core'
 //Custom
 import Config from '../config'
-import { Redirect } from 'react-router-dom'
-
-import { useQuery } from '@apollo/react-hooks'
-import tags from '../gqlTags'
 import About from './About'
-import ErrorPage from '../components/basic/ErrorPage'
-
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 const useStyles = makeStyles(theme => ({
@@ -42,25 +36,34 @@ const useStyles = makeStyles(theme => ({
     marginRight: ".3em"
   },
   scrollButton: {
+    '& *': {
+      margin: '0 0.7rem'
+    },
     display: 'flex',
     position: 'absolute',
-    bottom: '1rem'
+    bottom: '1rem',
+    color: '#fffa'
+  },
+  loadingSection: {
+    '& p': {
+      margin: '0 1rem'
+    },
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#fffa',
+    fontSize: '1.2rem'
   }
 }))
 
 //--------------------     REACT COMPONENT     --------------------
 
-export default function Landing(){
+export default function Landing({isLoading}){
 
   const classes = useStyles()
 
-  const { loading, error, data } = useQuery(tags.readMe)
-
-  if (error) return <ErrorPage />
-
-  if (data && data.me) {
-    return <Redirect to={'/users/' + data.me.id} />
-  }
+  console.log("About to render")
  
   return (
     <>
@@ -68,8 +71,13 @@ export default function Landing(){
         <Box flex="2 1 auto"/>
         <h1 className={classes.title}>feel with me</h1>
         <img src={Config.homeRoute + "/images/logo512nbg.png"} alt="Feel With Me Logo Icon" width="250em"/>
-        { loading ? 
-          <div><CircularProgress /><p>Loading Your Info</p></div> :
+        { isLoading
+          ? 
+          <div className={classes.loadingSection}>
+            <CircularProgress style={{width: '2rem', height: '2rem'}} />
+            <p>Loading Your Info</p>
+          </div>
+          :
           <Button className={classes.button} href={Config.serverRoutes.authUrlSpotify}>login with spotify to get started</Button>
         }
         <Box flex="3 1 auto"/>

@@ -26,6 +26,9 @@ export default function GateKeeper() {
     return <ErrorPage />
   }
 
+  //return any element for debugging
+  //return <Landing isLoading/>
+
   return (
     <Switch>
       <PublicRoute path="/about" component={About} />

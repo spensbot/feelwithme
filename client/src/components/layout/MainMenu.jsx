@@ -36,7 +36,7 @@ export default function MainMenu({handleClose, anchorEl, me}) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {me ? <MenuItem component={Link} to={Config.routes.users + me.id} onClick={handleClose}>Profile</MenuItem> : null}
+        {me ? <MenuItem component={Link} to={Config.routes.users + '/'+ me.id} onClick={handleClose}>Profile</MenuItem> : null}
         <MenuItem component={Link} to={Config.routes.messages} onClick={handleClose}>Messages</MenuItem>
         <MenuItem component={Link} to={Config.routes.about} onClick={handleClose}>About</MenuItem>
         <MenuItem onClick={handleThemeClick}>{themeText}</MenuItem>

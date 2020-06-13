@@ -30,7 +30,7 @@ export default ({ match }) => {
   const percentString = (match.weightedMatch * 100).toFixed(0) + "%";
   const artistString = match.artistCount + " Artists";
   const songString = match.trackCount + " Songs";
-  const linkUrl = "/users/" + match.user.id;
+  const linkUrl = "/user/" + match.user.id;
 
   return (
     <>

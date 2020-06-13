@@ -15,7 +15,7 @@ const Config = {
     },
     routes: {
         login: '/login',
-        users: '/users/',
+        users: '/user',
         about: '/about',
         messages: '/messages'
     } 
