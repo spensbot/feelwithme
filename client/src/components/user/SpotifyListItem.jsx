@@ -16,10 +16,11 @@ const useStyles = makeStyles(theme => ({
   number: {
       marginRight: '1rem'
   },
-  matchGlow: {
-    //zIndex: '1',
+  root: {
+    backgroundColor: '#0002'
+  },
+  common: {
     boxShadow: 'inset 0 0 1rem #1d15',
-    //boxShadow: '0 0 0.1rem #1d15'
   }
 }))
 
@@ -40,8 +41,8 @@ export default ({item, index, isMatch}) => {
   }
 
   return (
-  <>
-    <ListItem className={classes.matchGlow} button component="a" href={spotifyUrl} target="_blank">
+  <div className={classes.root}>
+    <ListItem className={isMatch ? classes.common : null} button component="a" href={spotifyUrl} target="_blank">
         {/* <Typography className={classes.number}>{`${index + 1}`}</Typography> */}
         <ListItemAvatar>
         <Avatar className={classes.avatar} alt="song" src={imageUrl}/>
@@ -51,6 +52,6 @@ export default ({item, index, isMatch}) => {
         {/* {isMatch ? <CommonIndicator /> : null} */}
     </ListItem>
     <Divider />
-  </>
+  </div>
   )
 }

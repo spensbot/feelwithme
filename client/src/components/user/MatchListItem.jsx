@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    backgroundColor: '#0002'
+  },
   listItemText: {
     marginBottom: theme.spacing(-0.5),
     padding: 0
@@ -34,7 +36,7 @@ export default ({ match }) => {
 
   return (
     <>
-      <ListItem component={Link} to={linkUrl} button>
+      <ListItem className={classes.root} component={Link} to={linkUrl} button>
         <ListItemAvatar>
           <Avatar className={classes.avatar} alt="match" src={match.user.imageUrl} />
         </ListItemAvatar>

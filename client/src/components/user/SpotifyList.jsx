@@ -37,9 +37,13 @@ export default function SpotifyList({isMe, isTracks, items, me}) {
     function onLoad() {
         headerHeight = document.getElementById('header').offsetHeight
         titleRef.current.style.top = "300px"
+        console.log("loaded")
+        console.log(headerHeight)
+        console.log(titleRef)
     }
 
     useEffect(() => {
+        console.log("effect used")
         window.addEventListener('load', onLoad)
 
         return window.removeEventListener('load', onLoad)

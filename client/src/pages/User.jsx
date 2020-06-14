@@ -47,6 +47,8 @@ export default () => {
   return (
     <Layout>
       <UserInfo isMe={isMe} user={data.user} me={data.me} />
+      
+      <Spacer />
 
       {isMe ? <MatchList user={data.user} /> : <MatchDescription user={data.user}/>}
 
