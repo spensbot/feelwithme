@@ -8,16 +8,24 @@ import CommonIndicator from './CommonIndicator'
 import { makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-  avatar: {
-      width: theme.spacing(7),
-      height: theme.spacing(7),
-      marginRight: theme.spacing(2),
+  artist: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+    marginRight: theme.spacing(2),
+    borderRadius: '0'
+  },
+  album: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+    marginRight: theme.spacing(2),
+    borderRadius: '0'
   },
   number: {
       marginRight: '1rem'
   },
   root: {
-    backgroundColor: '#0002'
+    //backgroundColor: '#0001',
+    backgroundColor: theme.palette.background.paper
   },
   common: {
     boxShadow: 'inset 0 0 1rem #1d15',
@@ -25,27 +33,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-export default ({item, index, isMatch}) => {
+export default ({isTrack, item, index, isMatch}) => {
   const classes = useStyles()
   const spotifyUrl = item.spotifyUrl;
 
   let imageUrl
   let secondary
-  if (item.imageUrl){ //Artist
-      imageUrl = item.imageUrl
-      secondary = "Popularity " + item.popularity 
-      secondary = ""
-  } else { //Song
-      imageUrl = item.album.imageUrl
-      secondary = item.artistName
-  }
+  imageUrl = item.imageUrl
 
   return (
   <div className={classes.root}>
     <ListItem className={isMatch ? classes.common : null} button component="a" href={spotifyUrl} target="_blank">
         {/* <Typography className={classes.number}>{`${index + 1}`}</Typography> */}
         <ListItemAvatar>
-        <Avatar className={classes.avatar} alt="song" src={imageUrl}/>
+        <Avatar className={isTrack ? classes.album : classes.artist} alt="song" src={imageUrl}/>
         </ListItemAvatar>
         <ListItemText primary={item.name} secondary={secondary}/>
         <Typography className={classes.number}>{`${index + 1}`}</Typography>

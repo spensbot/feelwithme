@@ -16,11 +16,12 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
-    backgroundColor: 'rgb(205, 40, 95)'
+    backgroundColor: 'rgb(205, 40, 95)',
+    padding: '0 16px'
     //backgroundColor: 'rgb(220, 45, 105)'
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   title: {
     flexGrow: 1,

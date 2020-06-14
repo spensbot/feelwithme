@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 //Material UI
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core'
 //Custom
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
-import { useEffect } from 'react'
-import { useState } from 'react'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +29,8 @@ export default function LearnMoreButton() {
 
   let animating = false
 
+  const requestRef = useRef();
+
   function scrollToAbout(event) {
     const pageHeight = window.innerHeight
     window.scrollTo({
@@ -41,7 +41,7 @@ export default function LearnMoreButton() {
 
   function tryToAnimate() {
     if (!animating) {
-      requestAnimationFrame(updateOpacity)
+      requestRef.current = requestAnimationFrame(updateOpacity)
       animating = true
     }
   }
@@ -61,14 +61,13 @@ export default function LearnMoreButton() {
   }
 
   useEffect( () => {
-    console.log("effect used")
     window.addEventListener('scroll', tryToAnimate)
 
     //Return a cleanup function to remove the listener after the component unmounts
     //The empty array argument to useEffect specifys that cleanup should only occur after unmounting, not between renders
     return () => {
-      console.log("cleanup")
       window.removeEventListener('scroll', tryToAnimate)
+      cancelAnimationFrame(requestRef.current)
     } 
   }, [])
  

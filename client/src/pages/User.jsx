@@ -64,6 +64,8 @@ export default () => {
         <SpotifyList isMe={isMe} items={data.user.topTracks} me={data.me} isTracks />
       </div>
 
+      <Spacer />
+
     </Layout>
   )
 }

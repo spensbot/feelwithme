@@ -10,7 +10,8 @@ import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    backgroundColor: '#0002'
+    //backgroundColor: '#0001'
+    backgroundColor: theme.palette.background.paper
   },
   listItemText: {
     marginBottom: theme.spacing(-0.5),
