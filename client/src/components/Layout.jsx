@@ -8,7 +8,14 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   site: {
-    //position: 'relative'
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  content: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: '100%'
   }
 }))
 
@@ -17,25 +24,20 @@ export default function Layout({children, dontUseHeader, dontUseFooter, dontUseC
   const classes = useStyles();
 
   const fixHeightStyle = {
-    maxHeight: '100vh'
-  }
-
-  const style = {
-    minHeight: '100vh'
+    height: '100vh',
   }
 
   return (
-    <>
-      {dontUseHeader ? null : 
-      <><Header dummy /><Header /></>}
-      <div className={classes.site}>
-        <SiteContainer dontUseContainer={dontUseContainer} style={fixHeight ? fixHeightStyle : style}>
-        {children}
+    <div className={classes.site} style={fixHeight ? fixHeightStyle : null}>
+      {dontUseHeader ? null : <Header dummy />}
+      {dontUseHeader ? null : <Header />}
+      <div className={classes.content}>
+        <SiteContainer dontUseContainer={dontUseContainer}>
+          {children}
         </SiteContainer>
       </div>
-      <Spacer percent={30}/>
       {dontUseFooter ? null : <Footer />}
       <Notification />
-    </>
+    </div>
   )
 }

@@ -10,7 +10,10 @@ import LoadingComponent from '../basic/LoadingComponent'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    
+    overflowY: 'scroll',
+    justifyContent: 'start',
+    paddingTop: '1rem',
+    flex: '1 1 auto'
   },
 }))
 
@@ -34,7 +37,7 @@ export default () => {
   }
 
   return (
-    <Box flex="1 1 auto" justifyContent="start" overflow="hidden" maxHeight="75vh" paddingTop="2rem">
+    <div className={classes.root}>
       {data.scopedMessages.map((message) => {
         const isOutgoing = message.from === id
         const content = message.content
@@ -45,6 +48,6 @@ export default () => {
 
         return <ListItem key={message.id} isOutgoing={isOutgoing} content={content} timeStamp={timeStamp} />
       })}
-    </Box>
+    </div>
   )
 }

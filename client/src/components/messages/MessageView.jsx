@@ -27,12 +27,6 @@ export default ({header}) => {
 
   const {id} = useParams()
   const {loading, error, data} = useQuery(READ_USER_DATA, {variables: {id}})
-  const [dummy, setstate] = useState(null)
-
-  const rerender = () => {
-    console.log("WHEL please rerender")
-    setstate(1)
-  }
 
   if(loading){
     return (
@@ -50,11 +44,11 @@ export default ({header}) => {
   }
 
   return (
-    <Box width="100%" flex='2'>
+    <Box height="100%" flexGrow="2" display="flex" flexDirection="column">
       {header ? <MessageHeader /> : null}
-      <Box display="flex" flex="3 1 auto" flexDirection="column" mx="1rem" mb="1rem">
+      <Box height="1rem" flex="1 1 30rem" display="flex" flexDirection="column" mx="1rem" mb="1rem">
         <MessageList />
-        <MessageInput rerender={rerender}/>
+        <MessageInput />
       </Box>
     </Box>
   )

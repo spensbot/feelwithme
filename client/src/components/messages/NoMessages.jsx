@@ -6,6 +6,7 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import ErrorPage from '../basic/ErrorPage'
 import LoadingPage from '../basic/LoadingPage'
+import Layout from '../Layout'
 
 const GET_ME = gql`{
   me {
@@ -21,9 +22,11 @@ export default () => {
   if (loading) return <LoadingPage />
 
   return (
-    <Centered>
-      <p>You haven't sent or received any messages yet.</p>
-      <Link to={config.routes.users + "/" + data.me.id}>Try messaging one of your matches</Link>
-    </Centered>
+    <Layout>
+      <Centered>
+        <p>You haven't sent or received any messages yet.</p>
+        <Link to={config.routes.users + "/" + data.me.id}>Try messaging one of your matches</Link>
+      </Centered>
+    </Layout>
   )
 }

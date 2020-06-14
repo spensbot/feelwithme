@@ -31,7 +31,7 @@ query scopedMessages($id: ID!){
   }
 }`
 
-export default function MessageInput({rerender}) {
+export default function MessageInput() {
 
   const {id} = useParams()
 
@@ -44,7 +44,7 @@ export default function MessageInput({rerender}) {
     setMessage("")
   }
   const onError = error => {
-    setAlert(client, 'error', 'Message Send Failed')
+    setAlert(client, 'error', 'Message Not Sent. Please try again.')
   }
   const update = (cache, {data : { createMessage } }) => {
     const { scopedMessages } = cache.readQuery({ query: READ_SCOPED_MESSAGES, variables: {id: id} })
@@ -53,9 +53,9 @@ export default function MessageInput({rerender}) {
     console.log(updatedScopedMessages)
     cache.writeQuery({
       query: READ_SCOPED_MESSAGES,
+      variables: {id: id},
       data: { scopedMessages: updatedScopedMessages }
     })
-    rerender()
   }
 
   const [sendMessage] = useMutation(CREATE_MESSAGE, {onCompleted: onCompleted, onError: onError, update: update})
@@ -73,7 +73,7 @@ export default function MessageInput({rerender}) {
     : null
 
   return (
-    <Box marginTop="1em" display="relative">
+    <Box marginTop="1em" position="relative">
       <TextField
         label="New Message"
         fullWidth={true}
@@ -83,7 +83,7 @@ export default function MessageInput({rerender}) {
         value={message}
         variant="outlined"
       />
-      <Box display="absolute" right="0" bottom="0">
+      <Box position="absolute" right="1rem" bottom="1rem">
         {sendButton}
       </Box>
       

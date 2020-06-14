@@ -24,14 +24,18 @@ export default () => {
   const [isNarrow, setIsNarrow] = useState(window.matchMedia('(max-width: 35rem)').matches)
   const {loading, error, data} = useQuery(READ_MESSAGED_USERS)
 
-  React.useEffect(() => {
-    function handleResize() {
-      const newIsNarrow = window.matchMedia('(max-width: 35rem)').matches
-      if (isNarrow != newIsNarrow)
-        setIsNarrow(newIsNarrow)
-    }
+  function handleResize() {
+    const newIsNarrow = window.matchMedia('(max-width: 35rem)').matches
+    if (isNarrow != newIsNarrow)
+      setIsNarrow(newIsNarrow)
+  }
 
+  React.useEffect(() => {
     window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   })
 
   if(loading){

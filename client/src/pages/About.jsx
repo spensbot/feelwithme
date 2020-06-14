@@ -10,7 +10,6 @@ import StepSection from '../components/about/StepSection'
 import spotifyLogo from '../images/Spotify_Logo_RGB_Green.png'
 import matchesExample from '../images/Matches.png'
 import matchedArtists from '../images/MatchedArtists.jpg'
-import Divider from '../components/basic/Divider'
 
 const useStyles = makeStyles(theme => ({
   paragraphHeader: {

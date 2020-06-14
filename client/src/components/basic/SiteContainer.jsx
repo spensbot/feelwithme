@@ -1,14 +1,14 @@
 import React from 'react'
 import Container from '@material-ui/core/Container'
 
-export default function SiteContainer({children, dontUseContainer}) {
+export default function SiteContainer({children, dontUseContainer, className}) {
 
   if(dontUseContainer) return (
-    <div>{children}</div>
+    <>{children}</>
   )
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" className={className}>
       {children}
     </Container>
   )
