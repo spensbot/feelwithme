@@ -3,11 +3,11 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Box from '@material-ui/core/Box'
-import { makeStyles, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 //Custom
 import Config from '../config'
 import About from './About'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import LearnMoreButton from '../components/Landing/LearnMoreButton'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,17 +35,6 @@ const useStyles = makeStyles(theme => ({
   accountCircle: {
     marginRight: ".3em"
   },
-  scrollButton: {
-    '& > *': {
-      color: '#fffa',
-      margin: '0 0.3rem'
-    },
-    display: 'flex',
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    bottom: '1rem',
-  },
   loadingSection: {
     '& p': {
       margin: '0 1rem'
@@ -65,16 +54,6 @@ export default function Landing({isLoading}){
 
   const classes = useStyles()
 
-  console.log("About to render")
-
-  function scrollToAbout(event) {
-    const pageHeight = window.innerHeight
-    window.scrollTo({
-      top: pageHeight,
-      behavior: 'smooth'     
-    })
-  }
- 
   return (
     <>
       <div className={classes.root}>
@@ -91,13 +70,9 @@ export default function Landing({isLoading}){
           <Button className={classes.button} href={Config.serverRoutes.authUrlSpotify}>login with spotify to get started</Button>
         }
         <Box flex="3 1 auto"/>
-        
-        <div className={classes.scrollButton}>
-          <ArrowDownwardIcon />
-          <Button onClick={scrollToAbout}>Scroll To Learn More</Button>
-          {/* <p><a onClick>Scroll To Learn More</a></p> */}
-          <ArrowDownwardIcon />
-        </div>
+
+        <LearnMoreButton />
+
       </div>
       <About dontUseHeader/>
     </>
