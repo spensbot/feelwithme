@@ -3,8 +3,18 @@ import Header from './layout/Header'
 import Footer from './layout/Footer'
 import SiteContainer from './basic/SiteContainer'
 import Notification from './basic/Notification'
+import Spacer from './basic/Spacer'
+import { makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+  site: {
+    //position: 'relative'
+  }
+}))
 
 export default function Layout({children, dontUseHeader, dontUseFooter, dontUseContainer, fixHeight}) {
+
+  const classes = useStyles();
 
   const fixHeightStyle = {
     maxHeight: '100vh'
@@ -17,11 +27,14 @@ export default function Layout({children, dontUseHeader, dontUseFooter, dontUseC
   return (
     <>
       {dontUseHeader ? null : 
-      <><Header /><Header fixed/></>}
-      <SiteContainer dontUseContainer={dontUseContainer} style={fixHeight ? fixHeightStyle : style}>
-      {children}
+      <><Header dummy /><Header /></>}
+      <div className={classes.site}>
+        <SiteContainer dontUseContainer={dontUseContainer} style={fixHeight ? fixHeightStyle : style}>
+        {children}
+        </SiteContainer>
+      </div>
+      <Spacer percent={30}/>
       {dontUseFooter ? null : <Footer />}
-      </SiteContainer>
       <Notification />
     </>
   )

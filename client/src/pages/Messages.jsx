@@ -1,14 +1,14 @@
-import React, {useState} from "react";
+import React, {useState} from "react"
 
 //Custom
 import Layout from "../components/Layout"
-import MessagesNarrow from "../components/MessagesNarrow";
-import MessagesFullscreen from '../components/MessagesFullscreen'
+import MessagesNarrow from "../components/messages/MessagesNarrow"
+import MessagesFullscreen from '../components/messages/MessagesFullscreen'
 import NoMessages from '../components/messages/NoMessages'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag' 
-import ErrorPage from "../components/basic/ErrorPage";
-import LoadingPage from "../components/basic/LoadingPage";
+import ErrorPage from "../components/basic/ErrorPage"
+import LoadingPage from "../components/basic/LoadingPage"
 
 export const READ_MESSAGED_USERS = gql`
 {

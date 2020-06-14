@@ -52,17 +52,15 @@ export default () => {
 
       <Spacer />
 
-      <Box display="flex" flexWrap="wrap">
-        <div className={classes.list}>
-          <SpotifyList isMe={isMe} items={data.user.topArtists} me={data.me} />
-        </div>
+      <div className={classes.list}>
+        <SpotifyList isMe={isMe} items={data.user.topArtists} me={data.me} />
+      </div>
 
-        <Spacer />
+      <Spacer />
 
-        <div className={classes.list}>
-          <SpotifyList isMe={isMe} items={data.user.topTracks} me={data.me} isTracks />
-        </div>
-      </Box>
+      <div className={classes.list}>
+        <SpotifyList isMe={isMe} items={data.user.topTracks} me={data.me} isTracks />
+      </div>
 
     </Layout>
   )

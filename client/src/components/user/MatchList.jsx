@@ -5,6 +5,8 @@ import ListItem from './MatchListItem'
 import gql from 'graphql-tag'
 import LoadingComponent from "../basic/LoadingComponent";
 import ErrorComponent from "../basic/ErrorComponent";
+import { Typography, makeStyles } from "@material-ui/core";
+import Spacer from "../basic/Spacer";
 
 export const READ_MATCHES = gql`
 {
@@ -23,13 +25,20 @@ export const READ_MATCHES = gql`
   }
 }`
 
+const useStyles = makeStyles(theme => ({
+  title: {
+    padding: '0.5rem',
+    backgroundColor: theme.palette.background.default
+  }
+}))
+
 export default () => {
 
   const { loading, error, data } = useQuery(READ_MATCHES)
 
   if (loading) {
     return (
-      <div className="song-list">
+      <div>
         <LoadingComponent />
       </div>
     )
@@ -44,8 +53,9 @@ export default () => {
   }
 
   return (
-    <div className="song-list">
-      <h1>Your Matches</h1>
+    <div>
+      <Typography variant="h4">Your Matches</Typography>
+      <Spacer percent={30}/>
       <List>
         {data.matches.map((match, index) => {
           return <ListItem key={index} match={match} />;

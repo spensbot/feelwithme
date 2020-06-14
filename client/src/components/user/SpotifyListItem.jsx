@@ -5,7 +5,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import CommonIndicator from './CommonIndicator'
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -14,13 +14,17 @@ const useStyles = makeStyles(theme => ({
       marginRight: theme.spacing(2),
   },
   number: {
-      fontSize: '1.5em',
-      fontWeight: 'lighter'
+      marginRight: '1rem'
+  },
+  matchGlow: {
+    //zIndex: '1',
+    boxShadow: 'inset 0 0 1rem #1d15',
+    //boxShadow: '0 0 0.1rem #1d15'
   }
 }))
 
 
-export default ({item, isMatch}) => {
+export default ({item, index, isMatch}) => {
   const classes = useStyles()
   const spotifyUrl = item.spotifyUrl;
 
@@ -37,14 +41,16 @@ export default ({item, isMatch}) => {
 
   return (
   <>
-      <ListItem button component="a" href={spotifyUrl} target="_blank">
-          <ListItemAvatar>
-              <Avatar className={classes.avatar} alt="song" src={imageUrl}/>
-          </ListItemAvatar>
-          <ListItemText primary={item.name} secondary={secondary}/>
-          {isMatch ? <CommonIndicator /> : null}
-      </ListItem>
-      <Divider />
+    <ListItem className={classes.matchGlow} button component="a" href={spotifyUrl} target="_blank">
+        {/* <Typography className={classes.number}>{`${index + 1}`}</Typography> */}
+        <ListItemAvatar>
+        <Avatar className={classes.avatar} alt="song" src={imageUrl}/>
+        </ListItemAvatar>
+        <ListItemText primary={item.name} secondary={secondary}/>
+        <Typography className={classes.number}>{`${index + 1}`}</Typography>
+        {/* {isMatch ? <CommonIndicator /> : null} */}
+    </ListItem>
+    <Divider />
   </>
   )
 }

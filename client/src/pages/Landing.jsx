@@ -36,13 +36,15 @@ const useStyles = makeStyles(theme => ({
     marginRight: ".3em"
   },
   scrollButton: {
-    '& *': {
-      margin: '0 0.7rem'
+    '& > *': {
+      color: '#fffa',
+      margin: '0 0.3rem'
     },
     display: 'flex',
     position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
     bottom: '1rem',
-    color: '#fffa'
   },
   loadingSection: {
     '& p': {
@@ -64,6 +66,14 @@ export default function Landing({isLoading}){
   const classes = useStyles()
 
   console.log("About to render")
+
+  function scrollToAbout(event) {
+    const pageHeight = window.innerHeight
+    window.scrollTo({
+      top: pageHeight,
+      behavior: 'smooth'     
+    })
+  }
  
   return (
     <>
@@ -84,7 +94,8 @@ export default function Landing({isLoading}){
         
         <div className={classes.scrollButton}>
           <ArrowDownwardIcon />
-          <Typography>Scroll To Learn More</Typography>
+          <Button onClick={scrollToAbout}>Scroll To Learn More</Button>
+          {/* <p><a onClick>Scroll To Learn More</a></p> */}
           <ArrowDownwardIcon />
         </div>
       </div>

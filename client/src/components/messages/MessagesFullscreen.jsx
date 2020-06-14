@@ -1,11 +1,11 @@
 import React from "react";
 import Box from "@material-ui/core/Box"
 //Custom
-import MessageUserList from "../components/messages/MessageUserList"
-import MessageView from '../components/messages/MessageView'
+import MessageUserList from "./MessageUserList"
+import MessageView from './MessageView'
 import { useParams } from "react-router-dom"
-import SiteContainer from "./basic/SiteContainer";
-import Divider from "./basic/Divider";
+import SiteContainer from "../basic/SiteContainer";
+import Divider from "../basic/Divider";
 
 export default ({messagedUsers}) => {
 

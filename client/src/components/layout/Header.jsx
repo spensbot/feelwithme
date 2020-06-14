@@ -12,6 +12,7 @@ import UserMenu from './UserMenu'
 import tags from '../../gqlTags'
 import {useQuery} from '@apollo/react-hooks'
 import MessagesButton from './MessagesButton'
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -25,7 +26,9 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     textAlign: 'left',
     fontFamily: 'Dancing Script, Cursive',
-    fontSize: '2.5em'
+    fontSize: '2.5em',
+    textDecoration: 'none',
+    color: 'white'
   }
 }));
 
@@ -34,7 +37,8 @@ const initState = {
   userMenuAnchorEl: null
 }
 
-export default ({fixed}) => {
+//A dummy header should be used to pad the layout beneath the header.
+export default ({dummy}) => {
   const classes = useStyles();
 
   const { loading, error, data } = useQuery(tags.readMe)
@@ -61,16 +65,15 @@ export default ({fixed}) => {
   }
 
   const style = {
-    position: fixed ? "fixed" : "relative",
+    position: dummy ? "relative" : "fixed",
     top: '0',
     left: '0',
     right: '0',
-    zIndex: '1'
+    zIndex: '100'
   }
  
   return (
-    <div style={style}>
-      {/* <AppBar position={fixed ? "fixed" : "relative"}> */}
+    <div id={dummy ? null : "header"} style={style}>
       <AppBar style={{position: 'relative'}}>
         <Toolbar className={classes.toolbar}>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openMainMenu}>
@@ -81,21 +84,21 @@ export default ({fixed}) => {
             open={Boolean(state.mainMenuAnchorEl)} 
             handleClose={closeMainMenu} 
             keepMounted
-            me={data.me}
+            me={data?.me}
           />
-          <Typography variant="h6" className={classes.title}>
+          <Link to="/" className={classes.title}>
             Feel with me
-          </Typography>
-          <MessagesButton />
+          </Link>
+          {data?.me ? <MessagesButton /> : null}
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={openUserMenu}>
-            {data.me ? <Avatar src={data.me.imageUrl}/> : <AccountCircleIcon />}
+            {data?.me ? <Avatar src={data?.me.imageUrl}/> : <AccountCircleIcon />}
           </IconButton>
           <UserMenu 
             anchorEl={state.userMenuAnchorEl} 
             open={Boolean(state.userMenuAnchorEl)} 
             handleClose={closeUserMenu}
             keepMounted
-            me={data.me}
+            me={data?.me}
           />
         </Toolbar>
       </AppBar>

@@ -1,7 +1,7 @@
 import React from "react";
 //Custom
-import MessageUserList from "../components/messages/MessageUserList"
-import MessageView from '../components/messages/MessageView'
+import MessageUserList from "./MessageUserList"
+import MessageView from './MessageView'
 import { useParams } from "react-router-dom";
 
 export default ({messagedUsers}) => {
