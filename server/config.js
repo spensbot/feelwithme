@@ -9,7 +9,7 @@ const config = {
     sameSite: "none"
   },
   serverUrl: "https://feelwithme.herokuapp.com",
-  appUrl: "https://feelwithme.netlify.app",
+  appUrl: "https://feelwithme.net",
   dbUri: process.env.DB_URI + 'feelwithme' + "?retryWrites=true&w=majority",
 
   spotifyApi:{
