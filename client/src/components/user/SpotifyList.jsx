@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from './SpotifyListItem';
 import { makeStyles, Button, Typography, Box, ButtonGroup } from '@material-ui/core';
 import Spacer from '../basic/Spacer';
-import LoadingPage from '../basic/LoadingPage';
+import { useLayoutEffect } from 'react';
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -37,18 +37,16 @@ export default function SpotifyList({isMe, isTracks, items, me}) {
     const titleRef = useRef();
 
     function updateHeader() {
-        console.log("load/resize")
         const headerHeight = document.getElementById('header').offsetHeight
         titleRef.current.style.top = `${headerHeight}px`
     }
 
     useEffect(() => {
-        window.addEventListener('load', updateHeader)
+        updateHeader()
         window.addEventListener('resize', updateHeader)
 
         //Cleanup function, called when component un-mounts
         return () => {
-            window.removeEventListener('load', updateHeader)
             window.removeEventListener('resize', updateHeader)
         } 
     }, [])
