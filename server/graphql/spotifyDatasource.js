@@ -8,6 +8,7 @@ class SpotifyAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = apiRoutes.url;
+    this.tokenUpdatePromise = null;
   }
 
   willSendRequest(request) {
@@ -40,10 +41,9 @@ class SpotifyAPI extends RESTDataSource {
       : [];
   }
 
-  //Use to "wrap" requests to spotify.
-  //Checks for a valid access token.
+  // "Wraps" requests to spotify to check for a valid access token.
   async wrappedRequest(user, path, params) {
-    this.context.accessToken = await this.getAccessToken(user)
+    await this.checkAccessToken(user)
 
     let response = await this.get(path, params)
     
@@ -51,8 +51,10 @@ class SpotifyAPI extends RESTDataSource {
   }
 
   //Returns a user's access token for getting data from Spotify.
-  //Gets a new token if necessary.
-  async getAccessToken(user) {
+  //Gets a refreshed token if necessary.
+  //Expired access token: BQBn2AM902j-8V4WLR67wB6YEK1a3Yck6y3Mm9glpJRqtIEqMPcc9RJmhozKzAcTXesTBRm4bxjNPp8gpQABLJ-5xGuDYnFvWqANOzX1u800S0bVmLVT_2nnTmQELo8wNHFbRqtRKHCanGsYrBgGmZKOnF6uFA9gm2gtzpfujsQOKqg
+  //For debugging
+  async checkAccessToken(user) {
     const timeBuffer = 60 * 1000 //1 minute
 
     if (Date.now() > (user.tokenExpirationDate - timeBuffer)) {
@@ -61,29 +63,77 @@ class SpotifyAPI extends RESTDataSource {
   }
 
   async refreshAccessToken(user) {
-
-    const requestData = qs.stringify({
-      grant_type: 'refresh_token',
-      refresh_token: user.spotifyRefreshToken,
-      client_id: process.env.SPOTIFY_CLIENT_ID,
-      client_secret: process.env.SPOTIFY_CLIENT_SECRET
-    })
-
-    const requestConfig = {
-        url: apiRoutes.refreshTokenUrl,
-        method: 'post',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        responseType: 'json',
-        data: requestData
+    if (this.tokenUpdatePromise) {
+      return this.tokenUpdatePromise
+    } else {
+      console.log("Refreshing access token")
+      this.updatingToken = true
+      this.tokenUpdatePromise = new Promise(function(resolve, reject){
+        const requestData = qs.stringify({
+          grant_type: 'refresh_token',
+          refresh_token: user.spotifyRefreshToken,
+          client_id: process.env.SPOTIFY_CLIENT_ID,
+          client_secret: process.env.SPOTIFY_CLIENT_SECRET
+        })
+    
+        const requestConfig = {
+            url: apiRoutes.refreshTokenUrl,
+            method: 'post',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            responseType: 'json',
+            data: requestData
+        }
+    
+        axios.request(requestConfig)
+        .then(response => {
+          const data = response.data
+          user.spotifyAccessToken = data.access_token
+          user.tokenExpirationDate = Date.now() + (data.expires_in * 1000)
+          user.save()
+          .then(savedUser => {
+            resolve(savedUser)
+          })
+          .catch(err => {
+            reject(err)
+          })
+        })
+        .catch(err => {
+          reject(err)
+        })
+        .finally(() => {})
+      })
     }
 
-    const response = await axios.request(requestConfig)
-    const data = response.data
+    // const requestData = qs.stringify({
+    //   grant_type: 'refresh_token',
+    //   refresh_token: user.spotifyRefreshToken,
+    //   client_id: process.env.SPOTIFY_CLIENT_ID,
+    //   client_secret: process.env.SPOTIFY_CLIENT_SECRET
+    // })
 
-    user.spotifyAccessToken = data.access_token
-    user.tokenExpirationDate = Date.now() + (data.expires_in * 1000)
+    // const requestConfig = {
+    //     url: apiRoutes.refreshTokenUrl,
+    //     method: 'post',
+    //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    //     responseType: 'json',
+    //     data: requestData
+    // }
 
-    await user.save()
+    // const response = await axios.request(requestConfig)
+    // const data = response.data
+
+    // user.spotifyAccessToken = data.access_token
+    // user.tokenExpirationDate = Date.now() + (data.expires_in * 1000)
+
+    // await user.save()
+
+    // return
+  }
+}
+
+function isTokenExpired(error){
+  if (error.message === "The access token expired"){
+    return true
   }
 }
 
@@ -118,12 +168,6 @@ function reduceArtist(artist){
   }
 
   return reducedArtist
-}
-
-function isTokenExpired(error){
-  if (error.message === "The access token expired"){
-    return true
-  }
 }
 
 module.exports = SpotifyAPI;

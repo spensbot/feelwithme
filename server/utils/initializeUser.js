@@ -8,6 +8,8 @@ const axios = require('axios')
 //Then create/save top matches
 async function initializeUser(user) {
 
+  const startTime = Date.now()
+
   const matchCount = 10
 
   await populateTopTracks(user)
@@ -20,8 +22,13 @@ async function initializeUser(user) {
 
   await Match.insertMany(matches)
 
-  user.isInitialized = true;
-  return user.save()
+  user.isInitialized = true
+  user.lastInitialized = Date.now()
+  user.initializationTime = Date.now() - startTime
+
+  const newUser = user.save()
+
+  return newUser
 }
 
 async function populateTopTracks(user) {

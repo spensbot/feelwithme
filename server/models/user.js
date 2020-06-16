@@ -25,8 +25,8 @@ const userSchema = new mongoose.Schema({
 
     //Custom FWM fields
     isInitialized: { type: Boolean, default: false },
-    initializationTime: Number,
     lastInitialized: Date,
+    initializationTime: Number,
     darkMode: { type: Boolean, default: true},
     displayName: String,
     bio: String,
@@ -54,12 +54,11 @@ userSchema.methods.mapSpotifyObject = function (userObject, accessToken, refresh
 }
 
 userSchema.pre('save', function() {
-    console.log(`Attempting save user: ${this.displayName}`)
+    //console.log(`Attempting save user: ${this.displayName}`)
 })
 
 
 const User = new mongoose.model("User", userSchema)
 
 module.exports = User
-//module.exports.initializationStatus = initializationStatus
 
