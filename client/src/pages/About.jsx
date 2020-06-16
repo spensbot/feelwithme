@@ -77,32 +77,24 @@ export default ({ dontUseHeader }) => {
           </Box>
         </Box>
         <Spacer />
-        <Typography
-          element="h2"
-          variant="h3"
-          gutterBottom
-        >
+        <Typography variant="h4" gutterBottom>
           How did it start?
         </Typography>
         <Typography element="p">
-          Music is one of the most important things in the world to me. When I
-          find the right song, there is no better feeling. But there are{" "}
-          <Link href="https://twitter.com/PigsAndPlans/status/1123598968162795526">
-            40,000 songs uploaded to spotify every day
-          </Link>
-          , and it hurts to think of all the good music I will never find. A
-          while ago, I had an idea: If I collected the top 10 songs of everyone
+          Music is one of the most important things in the world to me,
+          and I'm always looking for new songs to fall in love with.
+          Years ago, I had an idea: If I could collect the top 10 songs of everyone
           in the world, there must be some people who share 9 out of 10 with me.
-          If I haven't heard that 10th song, I need to, because it's definitely
+          If I haven't heard their 10th song, I need to, because it's definitely
           a banger.
         </Typography>
-        <Spacer />
-        <Typography element="h3" variant="h4" gutterBottom>
-          And thus, Feel With Me was born.
+        <Spacer percent={50}/>
+        <Typography variant="h5" gutterBottom>
+          It wasn't possible until now
         </Typography>
         <Typography element="p">
-          Today, with the proliferation of Spotify, people can
-          populate my database with their top 50 songs and artists by simply
+          Today, with the proliferation of online streaming, most people can
+          populate our database with their top 50 songs and artists by simply
           logging in.
         </Typography>
         <Spacer />
