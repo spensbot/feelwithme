@@ -41,7 +41,8 @@ export default function MainMenu({handleClose, anchorEl, me}) {
         <MenuItem component={Link} to={Config.routes.about} onClick={handleClose}>About</MenuItem>
         <MenuItem onClick={handleThemeClick}>{themeText}</MenuItem>
         {me ?
-          <MenuItem component="a" href={Config.serverRoutes.logoutUrl} onClick={handleClose}>Logout</MenuItem>
+          // <MenuItem component="a" href={Config.serverRoutes.logoutUrl} onClick={handleClose}>Logout</MenuItem>
+          null
           : <MenuItem component={Link} to={'/'} onClick={handleClose}>Login</MenuItem>
         }
       </Menu>
