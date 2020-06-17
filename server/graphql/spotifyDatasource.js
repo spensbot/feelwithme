@@ -67,7 +67,6 @@ class SpotifyAPI extends RESTDataSource {
       return this.tokenUpdatePromise
     } else {
       console.log("Refreshing access token")
-      this.updatingToken = true
       this.tokenUpdatePromise = new Promise(function(resolve, reject){
         const requestData = qs.stringify({
           grant_type: 'refresh_token',
@@ -100,7 +99,6 @@ class SpotifyAPI extends RESTDataSource {
         .catch(err => {
           reject(err)
         })
-        .finally(() => {})
       })
     }
 
