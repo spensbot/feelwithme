@@ -26,7 +26,7 @@ export default () => {
 
   function updateSize() {
     const newIsNarrow = window.matchMedia('(max-width: 35rem)').matches
-    if (isNarrow != newIsNarrow)
+    if (isNarrow !== newIsNarrow)
       setIsNarrow(newIsNarrow)
   }
 

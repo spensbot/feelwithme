@@ -69,7 +69,7 @@ export default function LearnMoreButton() {
       window.removeEventListener('scroll', tryToAnimate)
       cancelAnimationFrame(requestRef.current)
     } 
-  }, [])
+  })
  
   tryToAnimate()
 

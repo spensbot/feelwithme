@@ -3,7 +3,6 @@ import List from '@material-ui/core/List';
 import ListItem from './SpotifyListItem';
 import { makeStyles, Button, Typography, Box, ButtonGroup } from '@material-ui/core';
 import Spacer from '../basic/Spacer';
-import { useLayoutEffect } from 'react';
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -69,6 +68,7 @@ export default function SpotifyList({isMe, isTracks, items, me}) {
                     if (index < limit) {
                         return <ListItem key={index} isTrack={isTracks} index={index} item={item} isMatch={isInList(item.id, compareList)}/>
                     }
+                    else return null
                 })}
             </List>
             <Box display="flex" justifyContent="center">

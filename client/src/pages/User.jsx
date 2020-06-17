@@ -1,6 +1,5 @@
 import React from 'react'
 //Material UI
-import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 //Apollo
 import { useQuery } from '@apollo/react-hooks'

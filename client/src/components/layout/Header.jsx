@@ -12,8 +12,6 @@ import tags from '../../gqlTags'
 import {useQuery} from '@apollo/react-hooks'
 import MessagesButton from './MessagesButton'
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useLayoutEffect } from 'react';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {

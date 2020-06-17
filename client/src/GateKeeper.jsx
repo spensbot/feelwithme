@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import ErrorPage from './components/basic/ErrorPage'
 import Landing from './pages/Landing'
 import Messages from './pages/Messages'
@@ -19,7 +19,7 @@ const QUERY = gql`{
 }`
 
 export default function GateKeeper() {
-  const { loading, error, data } = useQuery(QUERY)
+  const { loading, error } = useQuery(QUERY)
   if (loading) return <Landing isLoading/>
   if (error) {
     console.log(error)

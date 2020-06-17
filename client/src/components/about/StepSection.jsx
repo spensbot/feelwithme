@@ -30,7 +30,7 @@ export default function StepSection({num, title, description, imageSrc, imageAlt
   let rootClass = classes.root;
 
   //Check for odd step number
-  if (num % 2 == 1) {
+  if (num % 2 === 1) {
     rootClass += " " + classes.alternate;
   }
 

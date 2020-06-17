@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    alignItems: 'center',
     backgroundColor: '#00000011',
     padding: '.5rem'
   },

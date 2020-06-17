@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Checkbox, FormHelperText, Box, FormControlLabel, Typography } from '@material-ui/core'
+import { Checkbox, Box, Typography } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import config from '../../config'
 import { Link } from 'react-router-dom'

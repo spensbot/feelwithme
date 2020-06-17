@@ -1,17 +1,19 @@
 import React from 'react'
 import { Box } from '@material-ui/core'
 
-export default function Spacer({percent, horizontal}) {
-  let baseHeight = 3;
-  let baseWidth = 1; 
+export default function Spacer({percent}) {
+  let height = 3;
+  let width = 1; 
 
   if (percent) {
-    baseHeight *= percent / 100
+    height *= percent / 100 
+    width *= percent / 100
   }
 
-  const height = baseHeight.toString() + "rem"
+  const heightString = height.toString() + "rem"
+  const widthString = width.toString() + "rem"
 
   return (
-    <Box height={height}/>
+    <Box height={heightString} width={widthString}/>
   )
 }

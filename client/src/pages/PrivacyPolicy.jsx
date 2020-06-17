@@ -153,6 +153,7 @@ export default function PrivacyPolicy() {
           href="https://termsandconditionstemplate.com/privacy-policy-generator/"
           title="Privacy policy template generator"
           target="_blank"
+          rel="noopener noreferrer"
         >
           termsandconditionstemplate.com
         </a>

@@ -5,7 +5,7 @@ import ListItem from './MatchListItem'
 import gql from 'graphql-tag'
 import LoadingComponent from "../basic/LoadingComponent";
 import ErrorComponent from "../basic/ErrorComponent";
-import { Typography, makeStyles } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Spacer from "../basic/Spacer";
 
 export const READ_MATCHES = gql`
@@ -24,13 +24,6 @@ export const READ_MATCHES = gql`
     weightedMatch
   }
 }`
-
-const useStyles = makeStyles(theme => ({
-  title: {
-    padding: '0.5rem',
-    backgroundColor: theme.palette.background.default
-  }
-}))
 
 export default () => {
 

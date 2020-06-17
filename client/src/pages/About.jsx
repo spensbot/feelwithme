@@ -1,6 +1,5 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Layout from "../components/Layout";
 import config from "../config";
 import { Box } from "@material-ui/core";
@@ -13,32 +12,7 @@ import dancing from '../images/Dancing1.jpeg'
 import listening from '../images/listening.jpeg'
 import ContainerBreakout from '../components/basic/ContainerBreakout'
 
-const useStyles = makeStyles(theme => ({
-  paragraphHeader: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(3)
-  },
-  fancy: {
-    fontFamily: 'Dancing Script, Cursive',
-    fontSize: '2rem'
-  },
-  stepsOuter: {
-    backgroundColor: '#0001',
-    width: '500%',
-    marginLeft: '-200%',
-    margin: '3rem 0 3rem -200%',
-    overflow: 'hidden'
-  },
-  stepsInner: {
-    width: '20%',
-    margin: '0 auto',
-    padding: '5rem 0',
-  }
-}));
-
 export default ({ dontUseHeader }) => {
-  const classes = useStyles();
-
   return (
     <div style={{overflow: "hidden"}}>
       <Layout dontUseHeader={dontUseHeader}>
@@ -47,8 +21,8 @@ export default ({ dontUseHeader }) => {
         {/* <Typography variant="h5"> That's what <span className={classes.fancy}>Feel With Me</span> is all about</Typography> */}
         <Typography variant="h5"> That's what we're about.</Typography>
         <Box flexDirection="row" margin="3rem 0" display="flex" flexWrap="wrap" justifyContent="center" alignItems="center">
-          <img width="100%" src={dancing} style={{maxWidth: "25rem"}} />
-          <img width="100%" src={listening} style={{maxWidth: "25rem"}}/>
+          <img width="100%" src={dancing} style={{maxWidth: "25rem"}} alt="Woman Listening to Headphones and Dancing"/>
+          <img width="100%" src={listening} style={{maxWidth: "25rem"}} alt="Man Listening to Headphones"/>
         </Box>
         <Typography variant="h5">Lets see how it works...</Typography>
 
