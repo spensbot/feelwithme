@@ -14,6 +14,7 @@ import Spacer from '../components/basic/Spacer'
 import tags from '../gqlTags'
 import LoadingPage from '../components/basic/LoadingPage'
 import ErrorPage from '../components/basic/ErrorPage'
+import ShareSection from '../components/user/ShareSection'
 
 
 const useStyles = makeStyles(theme => ({
@@ -46,13 +47,13 @@ export default () => {
   return (
     <Layout>
       <UserInfo isMe={isMe} user={data.user} me={data.me} />
-      
-      <Spacer />
 
+      {isMe ? <ShareSection /> : null}
+      
+      <Spacer percent={100}/>
       {isMe ? <MatchList user={data.user} /> : <MatchDescription user={data.user}/>}
 
       <Spacer />
-
       <div className={classes.list}>
         <SpotifyList isMe={isMe} items={data.user.topArtists} me={data.me} />
       </div>
