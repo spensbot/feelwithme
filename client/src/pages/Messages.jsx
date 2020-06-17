@@ -21,20 +21,21 @@ export const READ_MESSAGED_USERS = gql`
 
 export default () => {
   const {id} = useParams()
-  const [isNarrow, setIsNarrow] = useState(window.matchMedia('(max-width: 35rem)').matches)
+  const [isNarrow, setIsNarrow] = useState(false)
   const {loading, error, data} = useQuery(READ_MESSAGED_USERS)
 
-  function handleResize() {
+  function updateSize() {
     const newIsNarrow = window.matchMedia('(max-width: 35rem)').matches
     if (isNarrow != newIsNarrow)
       setIsNarrow(newIsNarrow)
   }
 
   React.useEffect(() => {
-    window.addEventListener('resize', handleResize)
+    updateSize()
+    window.addEventListener('resize', updateSize)
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', updateSize)
     }
   })
 

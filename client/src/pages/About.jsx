@@ -40,10 +40,10 @@ export default ({ dontUseHeader }) => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{overflow: "hidden"}}>
       <Layout dontUseHeader={dontUseHeader}>
         <Spacer />
-        <Typography variant="h3"> Connections Through Music </Typography>
+        <Typography variant="h3"> Connecting Through Music </Typography>
         {/* <Typography variant="h5"> That's what <span className={classes.fancy}>Feel With Me</span> is all about</Typography> */}
         <Typography variant="h5"> That's what we're about.</Typography>
         <Box flexDirection="row" margin="3rem 0" display="flex" flexWrap="wrap" justifyContent="center" alignItems="center">

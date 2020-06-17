@@ -1,6 +1,5 @@
 import React from 'react'
 import ListItem from './MessageListItem'
-import Box from '@material-ui/core/Box'
 import { useQuery } from '@apollo/react-hooks'
 import tags from '../../gqlTags'
 import { useParams } from 'react-router-dom'
@@ -36,15 +35,16 @@ export default () => {
     return castDate.toLocaleDateString("en-US")
   }
 
+  console.log(data.scopedMessages)
+
   return (
     <div className={classes.root}>
       {data.scopedMessages.map((message) => {
         const isOutgoing = message.from === id
         const content = message.content
-        const timeStamp = message.viewed
-          ? `Viewed ${getDateString(message.viewed)}`
+        const timeStamp = message.viewed ?
+          `Viewed ${getDateString(message.viewed)}`
           : `Sent ${getDateString(message.sent)}`
-
 
         return <ListItem key={message.id} isOutgoing={isOutgoing} content={content} timeStamp={timeStamp} />
       })}

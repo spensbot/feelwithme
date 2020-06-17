@@ -2,7 +2,6 @@ import React, { useState }  from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -13,6 +12,8 @@ import tags from '../../gqlTags'
 import {useQuery} from '@apollo/react-hooks'
 import MessagesButton from './MessagesButton'
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -21,15 +22,22 @@ const useStyles = makeStyles(theme => ({
     //backgroundColor: 'rgb(220, 45, 105)'
   },
   menuButton: {
-    marginRight: theme.spacing(1),
+    //marginRight: theme.spacing(1),
+    margin: '-10px',
+    width: '2rem',
+    height: '2rem'
   },
+  button: {
+    
+  },
+
   title: {
     flexGrow: 1,
     textAlign: 'left',
     fontFamily: 'Dancing Script, Cursive',
-    fontSize: '2.5em',
+    fontSize: '2rem',
     textDecoration: 'none',
-    color: 'white'
+    color: 'white',
   }
 }));
 
@@ -42,9 +50,9 @@ const initState = {
 export default ({dummy}) => {
   const classes = useStyles();
 
-  const { loading, error, data } = useQuery(tags.readMe)
+  const { data } = useQuery(tags.readMe)
 
-  const [state, setState] = useState(initState);
+  const [state, setState] = useState(initState)
 
   function closeMainMenu() {
     setState(initState)
@@ -77,7 +85,7 @@ export default ({dummy}) => {
     <div id={dummy ? null : "header"} style={style}>
       <AppBar style={{position: 'relative'}}>
         <Toolbar className={classes.toolbar}>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openMainMenu}>
+          <IconButton edge="start" className={null} color="inherit" aria-label="menu" onClick={openMainMenu}>
             <MenuIcon />
           </IconButton>
           <MainMenu
@@ -90,9 +98,9 @@ export default ({dummy}) => {
           <Link to="/" className={classes.title}>
             Feel with me
           </Link>
-          {data?.me ? <MessagesButton /> : null}
+          {data?.me ? <MessagesButton className={classes.menuButton}/> : null}
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={openUserMenu}>
-            {data?.me ? <Avatar src={data?.me.imageUrl}/> : <AccountCircleIcon />}
+            {data?.me ? <Avatar className={classes.menuButton} src={data?.me.imageUrl}/> : <AccountCircleIcon className={classes.menuButton}/>}
           </IconButton>
           <UserMenu 
             anchorEl={state.userMenuAnchorEl} 

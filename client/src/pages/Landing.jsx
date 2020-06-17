@@ -1,6 +1,5 @@
 import React from 'react'
 //Material UI
-import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core'
@@ -8,6 +7,7 @@ import { makeStyles } from '@material-ui/core'
 import Config from '../config'
 import About from './About'
 import LearnMoreButton from '../components/Landing/LearnMoreButton'
+import LoginForm from '../components/Landing/LoginForm'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,20 +54,20 @@ export default function Landing({isLoading}){
 
   const classes = useStyles()
 
+  
+
   return (
     <>
       <div className={classes.root}>
         <Box flex="2 1 auto"/>
         <h1 className={classes.title}>feel with me</h1>
         <img src={Config.homeRoute + "/images/logo512nbg.png"} alt="Feel With Me Logo Icon" width="250em"/>
-        { isLoading
-          ? 
+        { isLoading ? 
           <div className={classes.loadingSection}>
             <CircularProgress style={{width: '2rem', height: '2rem'}} />
             <p>Loading Your Info</p>
           </div>
-          :
-          <Button className={classes.button} href={Config.serverRoutes.authUrlSpotify}>login with spotify to get started</Button>
+          : <LoginForm />
         }
         <Box flex="3 1 auto"/>
 

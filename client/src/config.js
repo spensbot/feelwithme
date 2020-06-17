@@ -18,7 +18,11 @@ const Config = {
         users: '/user',
         about: '/about',
         messages: '/messages'
-    } 
+    },
+    emails: {
+        contact: 'contact@feelwithme.net',
+        spenser: 'spenser@feelwithme.net'
+    }
 }
 
 export default Config

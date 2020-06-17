@@ -3,7 +3,6 @@ import Header from './layout/Header'
 import Footer from './layout/Footer'
 import SiteContainer from './basic/SiteContainer'
 import Notification from './basic/Notification'
-import Spacer from './basic/Spacer'
 import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -15,8 +14,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     flexShrink: 1,
-    flexBasis: '100%',
-    overflow: 'hidden'
+    flexBasis: '100%'
   }
 }))
 
