@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Button, Box, Divider, TextField, Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { Link } from 'react-router-dom'
 import gqlTags from '../../gqlTags'
 import { useMutation, useApolloClient } from '@apollo/react-hooks'
 import {setAlert} from '../../localCache'
@@ -96,7 +95,7 @@ export default ({ isMe, user }) => {
     </>
   );
 
-  let buttonsBlock = <Button variant="contained" component={Link} to={`/messages/${user.id}`}>Message</Button>;
+  let buttonsBlock = null;
   if (editMode) {
     buttonsBlock = (
       <>

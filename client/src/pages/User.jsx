@@ -48,12 +48,12 @@ export default () => {
     <Layout>
       <UserInfo isMe={isMe} user={data.user} me={data.me} />
 
-      {isMe ? <ShareSection /> : null}
+      {isMe ? <ShareSection /> : <MatchDescription user={data.user}/>}
       
-      <Spacer percent={100}/>
-      {isMe ? <MatchList user={data.user} /> : <MatchDescription user={data.user}/>}
-
       <Spacer />
+      
+      {isMe ? <><MatchList user={data.user} /><Spacer /></> : null}
+      
       <div className={classes.list}>
         <SpotifyList isMe={isMe} items={data.user.topArtists} me={data.me} />
       </div>

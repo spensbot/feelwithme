@@ -27,7 +27,8 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper
   },
   common: {
-    boxShadow: 'inset 0 0 1rem #1d15',
+    //boxShadow: 'inset 0 0 1rem #1d15',
+    boxShadow: 'inset 0 0 1.5rem rgba(205, 40, 95, 0.7)'
   }
 }))
 
