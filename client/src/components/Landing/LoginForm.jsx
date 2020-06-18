@@ -28,8 +28,6 @@ export default function LoginForm() {
     })
   }
 
-  console.log(state)
-
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" maxWidth="30rem">
       <Box display="flex" justifyContent="center" alignItems="center">

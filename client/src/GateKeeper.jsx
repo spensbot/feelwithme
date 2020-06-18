@@ -12,6 +12,7 @@ import gql from 'graphql-tag'
 import PrivateRoute from './components/PrivateRoute'
 import PublicRoute from './components/PublicRoute'
 
+
 const QUERY = gql`{
   me {
     id
@@ -19,15 +20,14 @@ const QUERY = gql`{
 }`
 
 export default function GateKeeper() {
+
   const { loading, error } = useQuery(QUERY)
+
   if (loading) return <Landing isLoading/>
   if (error) {
     console.log(error)
     return <ErrorPage />
   }
-
-  //return any element for debugging
-  //return <Landing isLoading/>
 
   return (
     <Switch>
