@@ -1,28 +1,9 @@
 import React, {useState} from 'react'
 import { makeStyles, Button, Typography, Paper } from '@material-ui/core'
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import FileCopyIcon from '@material-ui/icons/FileCopy'
+import Dialog from '../basic/Dialog'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    zIndex: 200,
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#000c',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  dialog: {
-    width: '90%',
-    maxWidth: '35rem',
-    padding: '4%',
-    overflow: 'hidden',
-    textAlign: 'center',
-    backgroundColor: theme.palette.background.default,
-  },
   linkCollection: {
     display: "flex",
     flexDirection: "column",
@@ -99,19 +80,17 @@ export default function ShareDialog({onClose}) {
   const iconStyle = {marginRight: '0.5rem'}
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.dialog}>
-        <Typography variant="h6">Share Your Profile</Typography>
-        <div className={classes.linkCollection}>
-          <Button fullWidth variant="contained" onClick={openInNewTab(facebookShareLink)}>Facebook</Button>
-          <Button fullWidth variant="contained" onClick={openInNewTab(twitterShareLink)}>Twitter</Button>
-          <Button fullWidth variant="contained" onClick={openInNewTab(redditShareLink)}>Reddit</Button>
-          <Typography className={classes.url}>{profileUrl}</Typography>
-          <Button onClick={copyToClipboard}><FileCopyIcon style={iconStyle}/> Copy</Button>
-          {message ? <Typography className={classes.message}>{message}</Typography> : null}
-        </div>
-        <Button onClick={onClose}>Dismiss</Button>
-      </Paper>
-    </div>
+    <Dialog>
+      <Typography variant="h6">Share Your Profile</Typography>
+      <div className={classes.linkCollection}>
+        <Button fullWidth variant="contained" onClick={openInNewTab(facebookShareLink)}>Facebook</Button>
+        <Button fullWidth variant="contained" onClick={openInNewTab(twitterShareLink)}>Twitter</Button>
+        <Button fullWidth variant="contained" onClick={openInNewTab(redditShareLink)}>Reddit</Button>
+        <Typography className={classes.url}>{profileUrl}</Typography>
+        <Button onClick={copyToClipboard}><FileCopyIcon style={iconStyle}/> Copy</Button>
+        {message ? <Typography className={classes.message}>{message}</Typography> : null}
+      </div>
+      <Button onClick={onClose}>Dismiss</Button>
+    </Dialog>
   )
 }
