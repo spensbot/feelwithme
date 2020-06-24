@@ -19,7 +19,7 @@ module.exports = gql`
   type Mutation {
     createMessage(to: ID!, content: String!): Message!
     setMessageViewed(message: ID!): Message!
-    updateProfile(displayName: String, bio: String): User!
+    updateProfile(displayName: String, bio: String, imageUrl: String): User!
   }
 
   type Subscription {

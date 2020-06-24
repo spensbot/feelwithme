@@ -150,12 +150,15 @@ class FwmAPI extends DataSource {
     return await message.save()
   }
 
-  async updateActiveUser( displayName, bio ) {
+  async updateActiveUser( displayName, bio, imageUrl ) {
     if(displayName){
       this.context.user.displayName = displayName
     }
     if(bio) {
       this.context.user.bio = bio
+    }
+    if(imageUrl) {
+      this.context.user.imageUrl = imageUrl
     }
 
     return await this.context.user.save()
