@@ -1,5 +1,4 @@
 import React, {useState} from "react"
-import Avatar from "@material-ui/core/Avatar"
 import { makeStyles } from "@material-ui/core"
 import UserInfoText from "./UserInfoText"
 import EditIcon from '@material-ui/icons/Edit'
