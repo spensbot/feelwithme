@@ -72,13 +72,13 @@ export default function SpotifyList({isMe, isTracks, items, me}) {
                 })}
             </List>
             <Box display="flex" justifyContent="center">
-            {/* {
-                expanded
+            {
+                limit > 10
                 ? 
-                <Button onClick={() => setExpanded(false)}>Show Less -</Button>
+                <Button onClick={() => setLimit(10)}>Show Less -</Button>
                 :
-                <Button onClick={() => setExpanded(true)}>Show More +</Button>
-            } */}
+                <Button onClick={() => setLimit(50)}>Show More +</Button>
+            }
             </Box>
 
         </div>

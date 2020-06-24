@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { makeStyles, Button, Typography, Paper } from '@material-ui/core'
+import { makeStyles, Button, Typography } from '@material-ui/core'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import Dialog from '../basic/Dialog'
 

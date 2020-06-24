@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function ShareDialog({children}) {
+export default function Dialog({children}) {
 
   const classes = useStyles()
 

@@ -19,9 +19,6 @@ export default function PrivateRoute ({ component: Component, location, ...rest 
   } 
 
   const redirectPath = localStorage.getItem('loginRedirect')
-
-  console.log(redirectPath)
-  console.log(data.me)
   
   // If the user is logged in, and a redirect path exists
   if (data.me && redirectPath){

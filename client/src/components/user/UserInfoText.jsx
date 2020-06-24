@@ -59,10 +59,6 @@ export default ({ isMe, user }) => {
 
   const [updateProfile] = useMutation(gqlTags.updateProfile, {onCompleted: onCompleted, onError: onError})
 
-  const statusDisplay = null
-  // if (loading) statusDisplay = <h1>Saving Your Data</h1>
-  // if (error) statusDisplay = <h1>There was an Error. Please refresh and try again.</h1>
-
   const updateUserInfo = e => {
     updateProfile({ variables: { bio: state.bioEdit, displayName: state.displayNameEdit } })
   };
@@ -120,7 +116,6 @@ export default ({ isMe, user }) => {
 
   return (
     <Box display="flex" flexDirection="column" flex="1 1 0">
-      {statusDisplay}
       <Box
         className={classes.nameField}
         display="flex"
