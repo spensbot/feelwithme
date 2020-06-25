@@ -8,6 +8,7 @@ import Config from '../config'
 import About from './About'
 import LearnMoreButton from '../components/Landing/LearnMoreButton'
 import LoginForm from '../components/Landing/LoginForm'
+import Spacer from '../components/basic/Spacer'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     minHeight: '100vh',
   },
   title: {
-    fontSize: '5em',
+    fontSize: '4em',
     fontFamily: 'Dancing Script',
     fontWeight: 'lighter',
     color: '#111111',
@@ -61,7 +62,8 @@ export default function Landing({isLoading}){
       <div className={classes.root}>
         <Box flex="2 1 auto"/>
         <h1 className={classes.title}>feel with me</h1>
-        <img src={Config.homeRoute + "/images/logo512nbg.png"} alt="Feel With Me Logo Icon" width="250em"/>
+        <img src={Config.homeRoute + "/images/logo512nbg.png"} alt="Feel With Me Logo Icon" width="200em"/>
+        <Spacer percent={30}/>
         { isLoading ? 
           <div className={classes.loadingSection}>
             <CircularProgress style={{width: '2rem', height: '2rem'}} />

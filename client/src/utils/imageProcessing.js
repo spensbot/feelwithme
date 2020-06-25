@@ -79,10 +79,15 @@ async function updateUserProfilePicUrl(url){
 }
 
 async function migrateImage(imageUrl, userId){
+  console.log("Get Image")
   const originalFile = await getImageFileFromUrl(imageUrl)
+  console.log("Compress Image")
   const {file} = await compressImage(originalFile)
+  console.log("Get Signed URL")
   const signedUrl = await getSignedUploadUrl()
+  console.log("Upload To S3")
   await uploadImageToS3(file, signedUrl)
+  console.log("Update Profile Pic URL")
   const newUrl = "https://feelwithme-profile-pics.s3-us-west-2.amazonaws.com/" + userId + ".jpeg"
   const response = await updateUserProfilePicUrl(newUrl)
   return response
