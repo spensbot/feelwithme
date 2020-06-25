@@ -2,7 +2,7 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 const passport = require('passport');
 const User = require('../models/user');
 const initializeUser = require('../utils/initializeUser');
-const config = require('../config');
+const config = require('./config');
 
 passport.serializeUser(function (user, done) {
   done(null, user._id);

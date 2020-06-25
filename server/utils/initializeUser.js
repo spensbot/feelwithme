@@ -1,7 +1,7 @@
 const User = require('../models/user')
 const Match = require('../models/match')
 const generateMatches = require('./generateMatches')
-const config = require('../config')
+const config = require('../config/config')
 const axios = require('axios')
 
 //Get the users top artists and tracks

@@ -3,7 +3,6 @@ const { DataSource } = require('apollo-datasource');
 const User = require('../models/user');
 const Message = require('../models/message');
 const Match = require('../models/match');
-const { generateV4WriteProfilePicUrl } = require('../config/googleCloud')
 const { createProfilePicUploadUrl } = require('../config/aws')
 
 class FwmAPI extends DataSource {

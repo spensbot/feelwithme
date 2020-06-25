@@ -5,7 +5,7 @@ const express = require('express')
 //CUSTOM
 const auth = require('./routes/auth')
 const sessionParser = require('./config/sessionParser')
-const config = require('./config')
+const config = require('./config/config')
 
 //---------------     MONGOOSE CONFIG     ----------------
 

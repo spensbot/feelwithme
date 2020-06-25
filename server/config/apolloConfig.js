@@ -5,7 +5,7 @@ const resolvers = require('../graphql/resolvers')
 const FwmAPI = require('../graphql/fwmDatasource')
 const SpotifyAPI = require('../graphql/spotifyDatasource')
 const User = require('../models/user')
-const config = require('../config')
+const config = require('./config')
 
 module.exports = function(){
   const dataSources = () => ({

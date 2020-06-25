@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 var passport = require('passport')
 //CUSTOM
-var config = require('../config')
+var config = require('../config/config')
 
 //Here we direct the user to spotify, and tell spotify what information we want to access.
 router.get('/spotify', passport.authenticate('spotify', {
