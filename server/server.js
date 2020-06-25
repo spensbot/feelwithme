@@ -6,7 +6,6 @@ const express = require('express')
 const auth = require('./routes/auth')
 const sessionParser = require('./config/sessionParser')
 const config = require('./config')
-require('./config/googleCloud')
 
 //---------------     MONGOOSE CONFIG     ----------------
 
@@ -52,8 +51,6 @@ server.applyMiddleware({
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/404.html')
 })
-
-// TEST GENERATE SIGNED URL
  
 //---------------     START THE SERVER     ----------------
 app.listen({ port: config.serverPort }, () =>

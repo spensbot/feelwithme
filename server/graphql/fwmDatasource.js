@@ -3,6 +3,8 @@ const { DataSource } = require('apollo-datasource');
 const User = require('../models/user');
 const Message = require('../models/message');
 const Match = require('../models/match');
+const { generateV4WriteProfilePicUrl } = require('../config/googleCloud')
+const { createProfilePicUploadUrl } = require('../config/aws')
 
 class FwmAPI extends DataSource {
   constructor() {
@@ -132,7 +134,19 @@ class FwmAPI extends DataSource {
     return newMessages
   }
 
+  async getSignedProfilePicUploadUrl() {
+    if (!this.context.user) {
+      throw new Error("Users Must Be Logged in To Make this Request")
+    }
+    //let url = await generateV4WriteProfilePicUrl(this.context.user.id)
+    let url = await createProfilePicUploadUrl(this.context.user.id)
+    console.log(url)
+    return url
+  }
+
+
 //-----------------------     MUTATIONS     --------------------
+
 
   async createMessage( to, content ){
     const message = new Message({

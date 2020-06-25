@@ -12,6 +12,8 @@ const config = {
   appUrl: "https://feelwithme.net",
   dbUri: process.env.DB_URI + 'feelwithme' + "?retryWrites=true&w=majority",
 
+  awsBucketName: 'feelwithme-profile-pics',
+
   spotifyApi:{
     localCallback: '/auth/spotify/callback',
     url: 'https://api.spotify.com/v1/',
@@ -29,6 +31,7 @@ if (!config.isDeployed){
   config.serverUrl = "http://localhost:" + config.serverPort
   config.appUrl = "http://localhost:" + config.appPort
   config.dbUri = 'mongodb://localhost:27017/' + config.dbName
+  config.awsBucketName = 'feelwithme-profile-pics'
 }
 
 config.spotifyApi.callbackUrl = config.serverUrl + config.spotifyApi.localCallback

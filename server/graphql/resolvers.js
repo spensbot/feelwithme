@@ -9,6 +9,7 @@ module.exports = {
     matches: (_, {limit}, {dataSources}) => dataSources.fwmAPI.getActiveUserMatches(limit),
     tracks: (_, {spotifyIds}, {dataSources}) => dataSources.spotifyAPI.getTracks(spotifyIds),
     artists: (_, {spotifyIds}, {dataSources}) => dataSources.spotifyAPI.getArtists(spotifyIds),
+    signedProfilePicUploadUrl: (_, __, {dataSources}) => dataSources.fwmAPI.getSignedProfilePicUploadUrl()
   },
 
   Mutation: {

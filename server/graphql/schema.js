@@ -14,6 +14,7 @@ module.exports = gql`
     matches(limit: Int): [Match!]!
     artists(spotifyIds: [ID!]!): [Artist!]!
     tracks(spotifyIds: [ID!]!): [Track!]!
+    signedProfilePicUploadUrl: String!
   }
   
   type Mutation {

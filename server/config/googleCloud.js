@@ -3,9 +3,9 @@ const {Storage} = require('@google-cloud/storage');
 // Creates a client
 const storage = new Storage();
 
-const bucketName = 'profile-pics'
+const bucketName = 'feelwithme-profile-pics'
 
-async function generateV4ReadSignedUrl(userId) {
+async function generateV4WriteProfilePicUrl(userId) {
   // These options will allow temporary jpeg write access to the file
   const options = {
     version: 'v4',
@@ -14,16 +14,20 @@ async function generateV4ReadSignedUrl(userId) {
     contentType: "image/jpeg"
   };
 
-  // Get a v4 signed URL for reading the file
+  // Get a v4 signed URL for writing the file
   const [url] = await storage
     .bucket(bucketName)
     .file(userId)
-    .getSignedUrl(options);
+    .getSignedUrl(options)
+    console.log('Generated PUT signed URL:');
+    console.log(url);
+    console.log('You can use this URL with any user agent, for example:');
+    console.log(
+    "curl -X PUT -H 'Content-Type: application/octet-stream' " +
+      `--upload-file my-file '${url}'`
+  );
 
-  console.log('Generated PUT signed URL:');
-  console.log(url);
-  console.log('You can use this URL with any user agent, for example:');
-  console.log(`curl '${url}'`);
+  return url
 }
 
-generateV4ReadSignedUrl('5k3j95kj342l').catch(console.error);
+module.exports = {generateV4WriteProfilePicUrl}

@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^7.2.1",
     "apollo-boost": "^0.4.9",
     "apollo-cache-inmemory": "^1.6.6",
+    "axios": "^0.19.2",
     "firebase": "^7.15.4",
     "formik": "^2.1.4",
     "graphql": "^14.6.0",

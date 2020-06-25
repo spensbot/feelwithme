@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core"
 import UserInfoText from "./UserInfoText"
 import EditIcon from '@material-ui/icons/Edit'
 import ImageEditDialog from './ImageEditDialog'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles(theme => ({
   userInfo: {
@@ -10,7 +11,6 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
     paddingTop: theme.spacing(5),
     paddingBottom: theme.spacing(5),
-
   },
   userImage: {
     width: theme.spacing(25),
@@ -19,6 +19,11 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     //borderRadius: '50%',
     overflow: 'hidden'
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover'
   },
   imageEditButton: {
     position: 'absolute',
@@ -50,7 +55,10 @@ export default ({ isMe, user }) => {
   return (
     <div className={classes.userInfo}>
       <div className={classes.userImage}>
-        <img width="100%" height="100%" src={user.imageUrl} alt={user.displayName} />
+        {user.imageUrl
+          ? <img className={classes.image} src={user.imageUrl} alt={user.displayName} />
+          : <AccountCircleIcon className={classes.image} />
+        }
 
         {isMe ?
           <div className={classes.imageEditButton} onClick={() => setIsImageEdit(true)}>
