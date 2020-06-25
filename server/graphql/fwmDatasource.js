@@ -91,8 +91,6 @@ class FwmAPI extends DataSource {
       ]
     }).sort( {sent: 1} )
 
-    //MyModel.distinct('_id', { foo: 'bar' }, function(error, ids)
-
     return messages
   }
 
@@ -138,9 +136,7 @@ class FwmAPI extends DataSource {
     if (!this.context.user) {
       throw new Error("Users Must Be Logged in To Make this Request")
     }
-    //let url = await generateV4WriteProfilePicUrl(this.context.user.id)
     let url = await createProfilePicUploadUrl(this.context.user.id)
-    console.log(url)
     return url
   }
 

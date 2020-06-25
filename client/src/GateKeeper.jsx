@@ -36,9 +36,11 @@ export default function GateKeeper() {
       console.log("Moving Profile Picture To S3")
       migrateImage(imageUrl, data.me.id)
       .then(res => {
+        console.log("Moving Profile Picture To S3")
         console.log(res)
       })
       .catch(err => {
+        console.log("Moving Profile Picture To S3")
         console.log(err)
       })
     }

@@ -14,7 +14,6 @@ function createProfilePicUploadUrl(userId) {
       Bucket: config.awsBucketName,
       Key: userId + '.jpeg',
       Expires: expireSeconds,
-      //ACL: 'bucket-owner-full-control',
       ContentType:'image/jpeg'
     }
     
@@ -22,7 +21,6 @@ function createProfilePicUploadUrl(userId) {
       if (err) {
         reject(err)
       } else {
-        console.log('The URL is', url);
         resolve(url)
       }
     })

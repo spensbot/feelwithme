@@ -6,7 +6,6 @@ import { useState } from 'react'
 import { useMutation, useApolloClient, useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import {setAlert} from '../../localCache'
-import Axios from 'axios'
 import {compressImage} from '../../utils/imageProcessing'
 
 const useStyles = makeStyles(theme => ({
@@ -33,8 +32,6 @@ const useStyles = makeStyles(theme => ({
   imagePreview: {
     width: '100%',
     height: '100%',
-    //objectFit: 'contain',
-    //objectFit: 'none',
     objectFit: 'cover',
     position: 'absolute',
     top: '0',
@@ -93,20 +90,20 @@ export default function ImageEditDialog({onClose, user}) {
 
   function uploadImage(e) {
     if (state.file) {
-      console.log(data.signedProfilePicUploadUrl)
-      console.log(state.file)
-
-      Axios.request({
-        url: data.signedProfilePicUploadUrl,
+      fetch(data.signedProfilePicUploadUrl, {
         method: 'PUT',
         headers: {
           'Content-Type': 'image/jpeg'
         },
-        data: state.file
+        body: state.file
       })
       .then(res => {
         console.log(res)
-        updateProfile({variables: {imageUrl: "https://feelwithme-profile-pics.s3-us-west-2.amazonaws.com/" + user.id + ".jpeg"}})
+        updateProfile({
+          variables: {
+            imageUrl: "https://feelwithme-profile-pics.s3-us-west-2.amazonaws.com/" + user.id + ".jpeg?random=" + Date.now()
+          }
+        })
       })
       .catch(err => {
         console.log(err)
