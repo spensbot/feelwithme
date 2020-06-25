@@ -11,7 +11,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import gql from 'graphql-tag'
 import PrivateRoute from './components/PrivateRoute'
 import PublicRoute from './components/PublicRoute'
-import {migrateImage, compressImage} from '../../utils/imageProcessing'
+import {migrateImage} from './utils/imageProcessing'
 
 const QUERY = gql`{
   me {
@@ -32,9 +32,15 @@ export default function GateKeeper() {
 
   if (data.me && data.me.imageUrl) {
     const imageUrl = new URL(data.me.imageUrl)
-    if (imageUrl.host != 'feelwithme-profile-pics.s3-us-west-2.amazonaws.com') {
+    if (imageUrl.host !== 'feelwithme-profile-pics.s3-us-west-2.amazonaws.com') {
       console.log("Moving Profile Picture To S3")
-
+      migrateImage(imageUrl, data.me.id)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
   }
 

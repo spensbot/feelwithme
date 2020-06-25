@@ -6,9 +6,8 @@ import { useState } from 'react'
 import { useMutation, useApolloClient, useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import {setAlert} from '../../localCache'
-import storageRef from '../../utils/firebase'
 import Axios from 'axios'
-import {migrateImage, compressImage} from '../../utils/imageProcessing'
+import {compressImage} from '../../utils/imageProcessing'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,8 +58,6 @@ const GET_UPLOAD_URL = gql`{
 
 export default function ImageEditDialog({onClose, user}) {  
 
-  var profilePicRef = storageRef.child('profile-pics').child(user.id)
-
   const client = useApolloClient()
 
   const classes = useStyles()
@@ -84,44 +81,14 @@ export default function ImageEditDialog({onClose, user}) {
 
   function onChange(e) {
     if (e.target.files[0]) {
-      convertImage(e.target.files[0])
+      compressImage(e.target.files[0])
       .then(({file, base64}) => {
         setState({
           file: file,
           dataUrl: base64
         })
       })
-
-      // Resizer.imageFileResizer(
-      //   e.target.files[0],
-      //   512,
-      //   512,
-      //   'JPEG',
-      //   80,
-      //   0,
-      //   uri => {
-      //     var base64str = uri.substr(23)
-      //     var decoded = atob(base64str)
-      //     console.log("FileSize: " + decoded.length)
-      //     setDataUrl(uri)
-      //   },
-      //   'base64'
-      // )
-      // Resizer.imageFileResizer(
-      //   e.target.files[0],
-      //   512,
-      //   512,
-      //   'JPEG',
-      //   80,
-      //   0,
-      //   blob => {
-      //     const file = new File([blob], "image.jpeg")
-      //     setFile(file)
-      //   },
-      //   'blob'
-      // )
     }
-    //setFile(e.target.files[0])
   }
 
   function uploadImage(e) {
