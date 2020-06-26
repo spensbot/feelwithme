@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import List from '@material-ui/core/List';
 import ListItem from './SpotifyListItem';
-import { makeStyles, Button, Typography, Box, ButtonGroup } from '@material-ui/core';
+import { makeStyles, Button, Typography, Box } from '@material-ui/core';
 import Spacer from '../basic/Spacer';
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +27,7 @@ export default function SpotifyList({isMe, isTracks, items, me}) {
 
     const classes = useStyles()
 
-    const title = isTracks? "Songs" : "Artists"
+    const title = isTracks? "Top Songs" : "Top Artists"
     let compareList = []
     if (!isMe){
         compareList = isTracks ? me.topTracks : me.topArtists 
@@ -54,13 +54,13 @@ export default function SpotifyList({isMe, isTracks, items, me}) {
         <div>
             <div className={classes.title} ref={titleRef}>
                 <Typography variant="h4" className={classes.title}>{title}</Typography>
-                <div>
+                {/* <div>
                     <ButtonGroup>
                         <Button variant={limit === 10 ? "contained" : "outlined"} className={classes.button} onClick={() => setLimit(10)}>10</Button>
                         <Button variant={limit === 25 ? "contained" : "outlined"} className={classes.button} onClick={() => setLimit(25)}>25</Button>
                         <Button variant={limit === 50 ? "contained" : "outlined"} className={classes.button} onClick={() => setLimit(50)}>50</Button>
                     </ButtonGroup>
-                </div>
+                </div> */}
             </div>
             <Spacer percent={30} />
             <List>
