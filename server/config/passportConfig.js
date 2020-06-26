@@ -21,28 +21,32 @@ passport.use(new SpotifyStrategy(
       callbackURL: config.spotifyApi.callbackUrl
   },
   function (accessToken, refreshToken, expiresIn, profile, done) {
-    findOrCreateUser(accessToken, refreshToken, expiresIn, profile, done)
+    findOrCreateUser(accessToken, refreshToken, expiresIn, profile)
     .then(function(user){
-      return user
+      return done(null, user)
     })
     .catch(function(err){
       console.log(err)
-      return null
+      return done(err, null)
     })
   }
 ));
 
 async function findOrCreateUser(accessToken, refreshToken, expiresIn, profile, done){
   const user = await User.findOne({ spotifyId: profile._json.id })
-  if (user) return done(null, user)
+  if (user) return user
 
   const newUser = new User({})
   console.log(newUser)
   newUser.mapSpotifyObject(profile._json, accessToken, refreshToken, expiresIn)
   console.log(newUser)
   const startTime = Date.now()
-  const initializedUser = await initializeUser(newUser)
+  const initializedUser = await initializeUser(newUser, startTime)
   initializedUser.initializationTime = Date.now() - startTime
-  
-  return await initializedUser.save()
+  console.log("Completed")
+  console.log(initializedUser)
+  savedUser = await initializedUser.save()
+  console.log(savedUser)
+  console.log("User Save Successful!")
+  return savedUser
 }

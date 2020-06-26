@@ -30,7 +30,7 @@ class FwmAPI extends DataSource {
     return user
   }
 
-  async getActiveUserMatches(limit = 5){
+  async getActiveUserMatches(limit = 10){
 
     const matches1 = await Match.find({user1: this.context.user.id})
     .sort({'weightedMatch': -1})
