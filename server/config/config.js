@@ -6,7 +6,8 @@ const config = {
   cookieSettings: {
     maxAge: 1000*60*60*24*5,
     secure: true,
-    sameSite: "none"
+    sameSite: "none",
+    httpOnly: true
   },
   serverUrl: "https://feelwithme.herokuapp.com",
   appUrl: "https://feelwithme.net",
@@ -26,7 +27,6 @@ const config = {
 }
 
 if (!config.isDeployed){
-  config.cookieSettings.sameSite = undefined
   config.cookieSettings.secure = false
   config.serverUrl = "http://localhost:" + config.serverPort
   config.appUrl = "http://localhost:" + config.appPort
