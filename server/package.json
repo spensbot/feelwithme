@@ -4,7 +4,6 @@
   "description": "A social media site which allows users to connect via mutual music interest",
   "main": "server.js",
   "scripts": {
-    "preinstall": "node ./config/googleKeyInit.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
