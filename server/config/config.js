@@ -9,8 +9,8 @@ const config = {
     sameSite: "none",
     httpOnly: true
   },
-  serverUrl: "https://feelwithme.herokuapp.com",
-  serverUrl: "https://"
+  //serverUrl: "https://feelwithme.herokuapp.com",
+  serverUrl: "https://api.feelwithme.net",
   appUrl: "https://feelwithme.net",
   dbUri: process.env.DB_URI + 'feelwithme' + "?retryWrites=true&w=majority",
 
