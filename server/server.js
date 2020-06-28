@@ -47,6 +47,11 @@ server.applyMiddleware({
   cors: corsOptions
 })
 
+//---------------    Let's Encrypt SSL Verification     ------------
+app.get('/.well-known/acme-challenge/G2AIOCnCsxxHursDFklYsLBzLy5rLBt1mCi2-kV4b8A', (req, res) => {
+  res.sendFile(__dirname + '/G2AIOCnCsxxHursDFklYsLBzLy5rLBt1mCi2-kV4b8A')
+})
+
 //---------------     404 catchall     ------------------
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/404.html')
