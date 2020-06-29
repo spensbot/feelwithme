@@ -16,29 +16,35 @@ class SpotifyAPI extends RESTDataSource {
   }
 
   async getTracks(spotifyIds){
-    //comma separated ids per spotify api docs
-    const ids = spotifyIds.join(',')
-
-    const response = await this.wrappedRequest(this.context.user, 'tracks', {ids: ids})
-
-    const tracks = response.tracks
-
-    return Array.isArray(tracks)
-      ? tracks.map( track => reduceTrack(track))
-      : [];
+    if(spotifyIds.length > 0){
+      //comma separated ids per spotify api docs
+      const ids = spotifyIds.join(',')
+      const response = await this.wrappedRequest(this.context.user, 'tracks', {ids: ids})
+      const tracks = response.tracks
+  
+      return Array.isArray(tracks)
+        ? tracks.map( track => reduceTrack(track))
+        : [];
+    } 
+    else {
+      return []
+    }
   }
 
   async getArtists(spotifyIds){
-    //comma separated ids per spotify api docs
-    const ids = spotifyIds.join(',')
-
-    const response = await this.wrappedRequest(this.context.user, 'artists', {ids: ids})
-
-    const artists = response.artists
-
-    return Array.isArray(artists)
-      ? artists.map( artist => reduceArtist(artist))
-      : [];
+    if(spotifyIds.length > 0){
+      //comma separated ids per spotify api docs
+      const ids = spotifyIds.join(',')
+      const response = await this.wrappedRequest(this.context.user, 'artists', {ids: ids})
+      const artists = response.artists
+  
+      return Array.isArray(artists)
+        ? artists.map( artist => reduceArtist(artist))
+        : [];
+    } 
+    else {
+      return []
+    }
   }
 
   // "Wraps" requests to spotify to check for a valid access token.
