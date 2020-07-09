@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
             textDecoration: 'none'
         },
         color: '#888'
+    },
+    underlinedLink: {
+        color: '#888'
     }
 }))
 
@@ -30,6 +33,7 @@ export default function Footer(props) {
                 <span> | </span>
                 <Link to="/privacy-policy">Privacy Policy</Link>
             </div>
+            <span ><a href="https://sailingtomars.com/" className={classes.underlinedLink}>SailingToMars.com</a></span>
         </div>
     )
 }
