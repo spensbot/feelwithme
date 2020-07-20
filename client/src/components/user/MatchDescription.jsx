@@ -8,6 +8,7 @@ import LoadingComponent from '../basic/LoadingComponent'
 import { Link } from 'react-router-dom'
 import ChatIcon from '@material-ui/icons/Chat'
 import Spacer from '../basic/Spacer'
+import getMatchString from '../../utils/matchTransfer'
 
 export const READ_MATCHES = gql`
 {
@@ -76,7 +77,7 @@ export default ({user}) => {
   const trackWeight = 0.7
   const artistRatio = commonArtists.length/data.me.topArtists.length
   const trackRatio = commonTracks.length/data.me.topTracks.length
-  const matchPercent = (artistRatio * (1-trackWeight) + trackRatio * trackWeight) * 100
+  const matchRatio = (artistRatio * (1-trackWeight) + trackRatio * trackWeight)
 
   return (
     <Card elevation={5}>
@@ -87,7 +88,7 @@ export default ({user}) => {
           <div className={classes.description}>
             <div className={classes.heading}>
               <Typography variant='h4'>
-                {matchPercent.toPrecision(2)}%
+                {getMatchString(matchRatio)}
               </Typography>
               <div style={{minWidth: '5rem'}}>
                 <Typography>{commonArtists.length} Artists</Typography>  

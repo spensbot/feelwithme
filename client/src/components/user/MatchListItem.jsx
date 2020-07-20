@@ -7,6 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import Box from "@material-ui/core/Box";
 import { Link } from "react-router-dom";
 import { makeStyles, Typography } from "@material-ui/core";
+import getMatchString from '../../utils/matchTransfer';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,12 +29,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({ match }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const percentString = (match.weightedMatch * 100).toFixed(0) + "%";
-  const artistString = match.artistCount + " Artists";
-  const songString = match.trackCount + " Songs";
-  const linkUrl = "/user/" + match.user.id;
+  const percentString = getMatchString(match.weightedMatch)
+  const artistString = match.artistCount + " Artists"
+  const songString = match.trackCount + " Songs"
+  const linkUrl = "/user/" + match.user.id
 
   return (
     <>
